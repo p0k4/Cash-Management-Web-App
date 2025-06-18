@@ -144,3 +144,13 @@ tbody tr:nth-child(even) {
 .campo-invalido {
   border: 2px solid red !important;
 }
+
+.right-form .opcoes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 20px;
+  margin-top: 20px;
+}
