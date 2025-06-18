@@ -250,3 +250,45 @@ function validarFormulario() {
 ["data", "num-doc", "pagamento", "valor"].forEach((id) => {
   document.getElementById(id).addEventListener("input", validarFormulario);
 });
+
+// ...outras funções...
+
+async function exportarPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  const tabela = document.getElementById("tabelaRegistos");
+  const linhas = tabela.querySelectorAll("tbody tr");
+
+  const headers = ["Operação", "Data", "Nº Documento", "Pagamento", "Valor"];
+  const dados = [];
+  let total = 0;
+
+  linhas.forEach((linha) => {
+    if (linha.style.display !== "none") {
+      const celulas = linha.querySelectorAll("td");
+      const linhaDados = [];
+      for (let i = 0; i < 5; i++) {
+        let texto = celulas[i].textContent.replace("€", "").trim();
+        linhaDados.push(texto);
+        if (i === 4) {
+          const valor = parseFloat(texto.replace(",", "."));
+          if (!isNaN(valor)) total += valor;
+        }
+      }
+      dados.push(linhaDados);
+    }
+  });
+
+  doc.text("Relatório de Caixa", 14, 15);
+  doc.autoTable({
+    startY: 20,
+    head: [headers],
+    body: dados,
+  });
+
+  doc.text(`Total: ${total.toFixed(2)} €`, 14, doc.lastAutoTable.finalY + 10);
+
+  const hoje = new Date().toISOString().split("T")[0];
+  doc.save(`relatorio_caixa_${hoje}.pdf`);
+}

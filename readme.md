@@ -32,11 +32,16 @@ It's designed to manage financial transactions (entries and exits) for small ser
 - Type in the search box to filter any column in real-time.
 - Total updates based on filtered results.
 
-### 📤 Export to CSV
-- Generates a `.csv` file of the visible table rows.
-- Excludes the "Options" column.
-- Appends the total value at the end.
-- Uses `;` as separator for Excel compatibility.
+### 📤 Export Options
+- 📄 **Export to CSV**:
+  - Excludes the "Options" column.
+  - Appends the total value at the end.
+  - Uses `;` as separator for Excel compatibility.
+- 🧾 **Export to PDF**:
+  - Includes only visible rows.
+  - Excludes the "Options" column.
+  - Adds a "Total" line at the bottom.
+  - Automatically includes the current date in the file name (`relatorio_caixa_YYYY-MM-DD.pdf`).
 
 ---
 
@@ -66,7 +71,8 @@ It's designed to manage financial transactions (entries and exits) for small ser
 1. Clone or download the project.
 2. Open `index.html` in a web browser.
 3. Fill out the form and press **REGISTAR**.
-4. Use the table to manage data, or export it to CSV.
+4. Use the table to manage data.
+5. Export reports using **CSV** or **PDF**.
 
 ---
 
@@ -83,13 +89,13 @@ It's designed to manage financial transactions (entries and exits) for small ser
 - HTML5
 - CSS3
 - JavaScript (Vanilla)
-- [Font Awesome](https://fontawesome.com) (for icons)
+- [Font Awesome](https://fontawesome.com)
+- [jsPDF](https://github.com/parallax/jsPDF) + AutoTable plugin
 
 ---
 
 ## 📌 Future Ideas
 
-- Export to PDF
 - Persistent local storage
 - Filter by date or type
 - Login system

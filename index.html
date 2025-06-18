@@ -1,80 +1,99 @@
 <!DOCTYPE html>
 <html lang="pt">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Caixa Piscina</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="style.css">
-</head>
-<body onload="setarDataAtual(); document.getElementById('operacao').value = 'Operação 1'">
-  <div class="container">
-    <header>
-      <h1>Caixa Piscina</h1>
-    </header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Caixa Piscina</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
+  </head>
+  <body
+    onload="setarDataAtual(); document.getElementById('operacao').value = 'Operação 1'"
+  >
+    <div class="container">
+      <header>
+        <h1>Caixa Piscina</h1>
+      </header>
 
-    <main>
-      <div class="form-section">
-        <div class="left-form">
-          <label for="operacao">OPERAÇÃO</label>
-          <input type="text" id="operacao" name="operacao" readonly>
+      <main>
+        <div class="form-section">
+          <div class="left-form">
+            <label for="operacao">OPERAÇÃO</label>
+            <input type="text" id="operacao" name="operacao" readonly />
 
-          <label for="data">DATA</label>
-          <input type="date" id="data" name="data">
+            <label for="data">DATA</label>
+            <input type="date" id="data" name="data" />
 
-          <label for="num-doc">Nº DOC</label>
-          <input type="text" id="num-doc" name="num-doc">
+            <label for="num-doc">Nº DOC</label>
+            <input type="text" id="num-doc" name="num-doc" />
 
-          <label for="pagamento">PAGAMENTO</label>
-          <select id="pagamento" name="pagamento">
-            <option value="Dinheiro">Dinheiro</option>
-            <option value="Multibanco">Multibanco</option>
-            <option value="Transferência Bancária">Transferência Bancária</option>
-          </select>
+            <label for="pagamento">PAGAMENTO</label>
+            <select id="pagamento" name="pagamento">
+              <option value="Dinheiro">Dinheiro</option>
+              <option value="Multibanco">Multibanco</option>
+              <option value="Transferência Bancária">
+                Transferência Bancária
+              </option>
+            </select>
 
-          <label for="valor">VALOR</label>
-          <input type="number" id="valor" name="valor" step="0.01">
-        </div>
-
-        <div class="right-form">
-          <div class="caixa-total">
-            <span>TOTAL EM CAIXA</span>
-            <div id="total">0.00 €</div>
+            <label for="valor">VALOR</label>
+            <input type="number" id="valor" name="valor" step="0.01" />
           </div>
 
-          <div class="opcoes">
-            <span>OPÇÕES</span>
-            <button id="btnRegistar" onclick="registar()" disabled><i class="fas fa-save"></i> REGISTAR</button>
-<button onclick="exportarRelatorio()"><i class="fas fa-file-export"></i> Exportar Relatório</button>
+          <div class="right-form">
+            <div class="caixa-total">
+              <span>TOTAL EM CAIXA</span>
+              <div id="total">0.00 €</div>
+            </div>
+
+            <div class="opcoes">
+              <span>OPÇÕES</span>
+              <button id="btnRegistar" onclick="registar()" disabled>
+                <i class="fas fa-save"></i> REGISTAR
+              </button>
+              <button onclick="exportarRelatorio()">
+                <i class="fas fa-file-export"></i> Exportar CSV
+              </button>
+              <button onclick="exportarPDF()">
+                <i class="fas fa-file-pdf"></i> Exportar PDF
+              </button>
+            </div>
           </div>
         </div>
-      </div>
 
-      
-    <div class="campo-pesquisa">
-      <i class="fas fa-search"></i>
-      <input type="text" id="filtroTabela" onkeyup="filtrarTabela()" placeholder="Pesquisar...">
+        <div class="campo-pesquisa">
+          <i class="fas fa-search"></i>
+          <input
+            type="text"
+            id="filtroTabela"
+            onkeyup="filtrarTabela()"
+            placeholder="Pesquisar..."
+          />
+        </div>
+
+        <section class="tabela-registos">
+          <table id="tabelaRegistos">
+            <thead>
+              <tr>
+                <th>OPERAÇÃO</th>
+                <th>DATA</th>
+                <th>Nº DOC</th>
+                <th>MODO PAGAMENTO</th>
+                <th>VALOR</th>
+                <th>OPÇÕES</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+          <div id="totalTabela">Total: 0.00 €</div>
+        </section>
+      </main>
     </div>
-    
-
-      <section class="tabela-registos">
-        <table id="tabelaRegistos">
-          <thead>
-            <tr>
-              <th>OPERAÇÃO</th>
-              <th>DATA</th>
-              <th>Nº DOC</th>
-              <th>MODO PAGAMENTO</th>
-              <th>VALOR</th>
-              <th>OPÇÕES</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-        <div id="totalTabela">Total: 0.00 €</div>
-      </section>
-    </main>
-  </div>
-  <script src="script.js"></script>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>
