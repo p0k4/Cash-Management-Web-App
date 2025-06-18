@@ -140,3 +140,7 @@ tbody tr:nth-child(even) {
 .btn-apagar-linha:hover {
   background-color: #c9302c;
 }
+
+.campo-invalido {
+  border: 2px solid red !important;
+}

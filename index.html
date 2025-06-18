@@ -6,7 +6,7 @@
   <title>Caixa Piscina</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body onload="setarDataAtual()">
+<body onload="setarDataAtual(); document.getElementById('operacao').value = 'Operação 1'">
   <div class="container">
     <header>
       <h1>Caixa Piscina</h1>
@@ -16,7 +16,7 @@
       <div class="form-section">
         <div class="left-form">
           <label for="operacao">OPERAÇÃO</label>
-          <input type="text" id="operacao" name="operacao">
+          <input type="text" id="operacao" name="operacao" readonly>
 
           <label for="data">DATA</label>
           <input type="date" id="data" name="data">
@@ -43,7 +43,7 @@
 
           <div class="opcoes">
             <span>OPÇÕES</span>
-            <button onclick="registar()">REGISTAR</button>
+            <button id="btnRegistar" onclick="registar()" disabled>REGISTAR</button>
 <button onclick="exportarRelatorio()">Exportar Relatório</button>
           </div>
         </div>

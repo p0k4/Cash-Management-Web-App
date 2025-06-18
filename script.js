@@ -1,4 +1,6 @@
 
+let contadorOperacao = 1;
+
 function setarDataAtual() {
   const dataInput = document.getElementById("data");
   const hoje = new Date().toISOString().split('T')[0];
@@ -8,7 +10,7 @@ function setarDataAtual() {
 function registar() {
   const valor = parseFloat(document.getElementById('valor').value);
   if (!isNaN(valor)) {
-    const operacao = document.getElementById('operacao').value;
+    const operacao = "Operação " + contadorOperacao;
     const data = document.getElementById('data').value;
     const numDoc = document.getElementById('num-doc').value;
     const pagamento = document.getElementById('pagamento').value;
@@ -27,11 +29,13 @@ function registar() {
     btn.className = "btn-apagar-linha";
     btn.onclick = function() {
       novaLinha.remove();
-      atualizarTotalTabela();
+      contadorOperacao++;
+    atualizarTotalTabela();
     };
     cellOpcoes.appendChild(btn);
 
     apagar();
+    contadorOperacao++;
     atualizarTotalTabela();
   } else {
     alert("Insira um valor válido!");
@@ -39,7 +43,7 @@ function registar() {
 }
 
 function apagar() {
-  document.getElementById('operacao').value = '';
+  document.getElementById('operacao').value = 'Operação ' + contadorOperacao;
   setarDataAtual();
   document.getElementById('num-doc').value = '';
   document.getElementById('pagamento').value = 'Dinheiro';
@@ -66,7 +70,8 @@ function filtrarTabela() {
 
     linhas[i].style.display = corresponde ? "" : "none";
   }
-  atualizarTotalTabela();
+  contadorOperacao++;
+    atualizarTotalTabela();
 }
 
 function atualizarTotalTabela() {
@@ -88,37 +93,68 @@ function atualizarTotalTabela() {
   document.getElementById("total").textContent = total.toFixed(2) + " €";
 }
 
+
 function exportarRelatorio() {
   const tabela = document.getElementById("tabelaRegistos");
   let csv = "";
+  let total = 0;
   const linhas = tabela.querySelectorAll("tr");
 
-  linhas.forEach(linha => {
+  linhas.forEach((linha, idx) => {
     if (linha.style.display !== "none") {
       const celulas = linha.querySelectorAll("th, td");
       let linhaCSV = [];
       celulas.forEach((celula, index) => {
         if (index === 5) return;  // Ignora a coluna de Opções
-        linhaCSV.push(celula.textContent.replace(/\n/g, "").trim());
+        let texto = celula.textContent.replace(/\n/g, "").trim();
+        linhaCSV.push(texto);
+        if (idx > 0 && index === 4) {
+          let valor = parseFloat(texto.replace("€", "").replace(",", "."));
+          if (!isNaN(valor)) total += valor;
+        }
       });
       csv += linhaCSV.join(";") + "\n";
     }
   });
 
-  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-  const url = URL.createObjectURL(blob);
+  csv += "\n------------------------------";
+csv += "\nTotal;;;;" + total.toFixed(2) + " €";
+
+  const blobFinal = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+  const urlFinal = URL.createObjectURL(blobFinal);
   const link = document.createElement("a");
-  link.setAttribute("href", url);
+  link.setAttribute("href", urlFinal);
   link.setAttribute("download", "relatorio_caixa.csv");
   link.style.display = "none";
   document.body.appendChild(link);
   link.click();
-  
-  const totalTexto = document.getElementById("totalTabela").textContent;
-  const blobFinal = new Blob([csv + "\n" + totalTexto], { type: "text/csv;charset=utf-8;" });
-  const urlFinal = URL.createObjectURL(blobFinal);
-  link.setAttribute("href", urlFinal);
-
   document.body.removeChild(link);
-
 }
+
+
+function validarFormulario() {
+  const campos = {
+    data: document.getElementById('data'),
+    numDoc: document.getElementById('num-doc'),
+    pagamento: document.getElementById('pagamento'),
+    valor: document.getElementById('valor')
+  };
+
+  let valido = true;
+
+  Object.values(campos).forEach(campo => {
+    if (!campo.value.trim()) {
+      campo.classList.add('campo-invalido');
+      valido = false;
+    } else {
+      campo.classList.remove('campo-invalido');
+    }
+  });
+
+  document.getElementById('btnRegistar').disabled = !valido;
+}
+
+// Adicionar escutadores aos campos
+['data', 'num-doc', 'pagamento', 'valor'].forEach(id => {
+  document.getElementById(id).addEventListener('input', validarFormulario);
+});
