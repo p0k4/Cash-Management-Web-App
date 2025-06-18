@@ -25,7 +25,7 @@ function registar() {
 
     const cellOpcoes = novaLinha.insertCell(5);
     const btn = document.createElement('button');
-    btn.textContent = "Apagar";
+    btn.innerHTML = '<i class="fas fa-trash"></i> Apagar';
     btn.className = "btn-apagar-linha";
     btn.onclick = function() {
       novaLinha.remove();
@@ -130,6 +130,7 @@ csv += "\nTotal;;;;" + total.toFixed(2) + " €";
   link.click();
   document.body.removeChild(link);
 }
+
 
 
 function validarFormulario() {

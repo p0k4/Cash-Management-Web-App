@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Caixa Piscina</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="style.css">
 </head>
 <body onload="setarDataAtual(); document.getElementById('operacao').value = 'Operação 1'">
@@ -43,13 +44,18 @@
 
           <div class="opcoes">
             <span>OPÇÕES</span>
-            <button id="btnRegistar" onclick="registar()" disabled>REGISTAR</button>
-<button onclick="exportarRelatorio()">Exportar Relatório</button>
+            <button id="btnRegistar" onclick="registar()" disabled><i class="fas fa-save"></i> REGISTAR</button>
+<button onclick="exportarRelatorio()"><i class="fas fa-file-export"></i> Exportar Relatório</button>
           </div>
         </div>
       </div>
 
+      
+    <div class="campo-pesquisa">
+      <i class="fas fa-search"></i>
       <input type="text" id="filtroTabela" onkeyup="filtrarTabela()" placeholder="Pesquisar...">
+    </div>
+    
 
       <section class="tabela-registos">
         <table id="tabelaRegistos">

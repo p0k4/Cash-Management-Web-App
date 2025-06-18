@@ -154,3 +154,29 @@ tbody tr:nth-child(even) {
   gap: 20px;
   margin-top: 20px;
 }
+
+.campo-pesquisa {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 2px solid #0d4a63;
+  padding: 10px;
+  border-radius: 6px;
+  margin: 20px 0;
+}
+
+.campo-pesquisa i {
+  color: #0d4a63;
+  font-size: 18px;
+}
+
+.campo-pesquisa input {
+  border: none;
+  outline: none;
+  font-size: 16px;
+  width: 100%;
+}
+
+.campo-pesquisa:focus-within {
+  border-color: red;
+}
