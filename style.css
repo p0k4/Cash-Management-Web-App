@@ -180,3 +180,31 @@ tbody tr:nth-child(even) {
 .campo-pesquisa:focus-within {
   border-color: red;
 }
+
+.btn-editar-linha {
+  background-color: #f0ad4e;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  margin-left: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-editar-linha:hover {
+  background-color: #ec971f;
+}
+
+.btn-cancelar-linha {
+  background-color: #999;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  margin-left: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-cancelar-linha:hover {
+  background-color: #666;
+}
