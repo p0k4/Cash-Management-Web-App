@@ -51,10 +51,13 @@ It's designed to manage financial transactions (entries and exits) for small ser
 ---
 
 ## 📁 Folder Structure
+
+```
 📦 caixa_piscina/
 ├── index.html         # Main page
 ├── style.css          # All visual styles
 ├── script.js          # App logic
+```
 
 ---
 
@@ -97,5 +100,3 @@ It's designed to manage financial transactions (entries and exits) for small ser
 ## 👨‍💻 Author
 
 Developed with simplicity in mind, using 100% client-side code.
-
----
