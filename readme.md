@@ -1,54 +1,101 @@
-# Caixa Piscina - Cash Management App
+# 📘 Caixa Piscina - Cash Management Web App
 
-This project is a lightweight HTML/CSS/JavaScript-based web application designed to manage financial operations (income and expenses) for small businesses — specifically tailored for a swimming pool cash box ("Caixa Piscina").
+Caixa Piscina is a simple and interactive **cash register system** built using only HTML, CSS, and JavaScript.  
+It's designed to manage financial transactions (entries and exits) for small services, such as a **public swimming pool cash box**.
 
 ---
 
-## ✨ Features (Up to Font Awesome Version)
+## 🚀 Features
 
-- ✅ **Auto-generated operation ID**: Begins at `Operação 1` and increments with each entry.
-- 📅 **Auto-filled date field** with the current system date.
-- 📝 Form includes:
-  - Operation (read-only, auto-numbered)
+### 💾 Operation Management
+- 🧾 **Auto-generated operation number** (Operação 1, Operação 2, ...).
+- 📅 **Automatic date input** set to today's date.
+- 💳 **Payment methods**:
+  - Dinheiro
+  - Multibanco
+  - Transferência Bancária
+- 💶 **Monetary input** with real-time total calculation.
+
+### 📋 Interactive Table
+- 📥 **Each entry is recorded** in a table with the following columns:
+  - Operation
   - Date
-  - Document Number
-  - Payment Method (Dinheiro, Multibanco, Transferência Bancária)
-  - Value (in euros)
-- 🧮 Dynamic **"Total in Cash"** display based on the total from the table.
-- 📋 **Interactive table** that displays all registered operations.
-- 🔍 **Real-time filtering** (search) on all table columns.
-- 💶 **Automatic total update** based on visible (filtered or not) table rows.
-- 📤 **Export to CSV** with:
-  - Filtered results only
-  - Sum of "Valor" at the end
-  - Clean formatting (no "Opções" column)
-  - Visual separator before the total line
+  - Document number
+  - Payment method
+  - Value (in €)
+  - Options (Edit / Delete)
+- ✏️ **Edit each row** directly with in-line fields.
+- ❌ **Cancel editing** to restore original values.
+- 🗑 **Delete** individual rows.
+
+### 🔍 Search & Filter
+- Type in the search box to filter any column in real-time.
+- Total updates based on filtered results.
+
+### 📤 Export to CSV
+- Generates a `.csv` file of the visible table rows.
+- Excludes the "Options" column.
+- Appends the total value at the end.
+- Uses `;` as separator for Excel compatibility.
 
 ---
 
-## 💡 UI Enhancements
+## 🎨 User Interface
 
-- 🎨 Clean layout using custom CSS
-- 💾 **Font Awesome Icons** added to:
-  - REGISTAR (`<i class="fas fa-save">`)
-  - Apagar linha (`<i class="fas fa-trash">`)
-  - Exportar Relatório (`<i class="fas fa-file-export">`)
-- 🔍 **Search field with icon** and colored border:
-  - Default border: blue (#0d4a63)
-  - On focus: red
-- ✅ **Form validation**:
-  - REGISTAR button only enabled when all fields are filled
-  - Invalid fields highlighted with red border
+- 💡 Built entirely with HTML + CSS (no frameworks)
+- 🎨 Font Awesome icons for enhanced clarity:
+  - Save, Edit, Delete, Export
+- 🔴 Form field validation with red borders for missing inputs
+- 🔵 Blue borders around search box, turning red on focus
 
 ---
 
-## 🛠 Technologies Used
+## 📁 Folder Structure
+📦 caixa_piscina/
+├── index.html         # Main page
+├── style.css          # All visual styles
+├── script.js          # App logic
+
+---
+
+## ✅ Usage
+
+1. Clone or download the project.
+2. Open `index.html` in a web browser.
+3. Fill out the form and press **REGISTAR**.
+4. Use the table to manage data, or export it to CSV.
+
+---
+
+## 🔒 Notes
+
+- Data is not persistent: no database or localStorage (yet).
+- For personal or small-scale usage.
+- Can be hosted locally or on any static server.
+
+---
+
+## 🧱 Built With
 
 - HTML5
 - CSS3
-- Vanilla JavaScript (no frameworks)
-- [Font Awesome](https://fontawesome.com) for icons
+- JavaScript (Vanilla)
+- [Font Awesome](https://fontawesome.com) (for icons)
 
 ---
 
-## 📁 File Structure
+## 📌 Future Ideas
+
+- Export to PDF
+- Persistent local storage
+- Filter by date or type
+- Login system
+- Category/tags per operation
+
+---
+
+## 👨‍💻 Author
+
+Developed with simplicity in mind, using 100% client-side code.
+
+---
