@@ -65,6 +65,7 @@ select {
 .caixa-total {
   background-color: #0d4a63;
   color: white;
+  font-size: 30px;
   text-align: center;
   padding: 10px;
   margin-bottom: 20px;
@@ -72,9 +73,16 @@ select {
 
 .caixa-total #total {
   font-size: 24px;
-  margin-top: 10px;
+  margin-top: 20px;
+  font-size: 25px;
 }
 
+
+.totais-por-pagamento {
+  font-size: 14px;
+  color: #f3eeee;
+  line-height: 1.6;
+}
 .opcoes span {
   background-color: #0d4a63;
   color: white;
@@ -260,7 +268,7 @@ input::placeholder {
   cursor: pointer;
 }
 
-.btn-apagar-tudo:hover { 
+.btn-apagar-tudo:hover {
   background-color: #c82333;
 }
 

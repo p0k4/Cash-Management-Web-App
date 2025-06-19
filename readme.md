@@ -8,6 +8,7 @@ It's designed to manage financial transactions (entries and exits) for small ser
 ## 🚀 Features
 
 ### 💾 Operation Management
+
 - 🧾 **Auto-generated operation number** (Operação 1, Operação 2, ...).
 - 📅 **Automatic date input** set to today's date.
 - 💳 **Payment methods**:
@@ -16,7 +17,24 @@ It's designed to manage financial transactions (entries and exits) for small ser
   - Transferência Bancária
 - 💶 **Monetary input** with real-time total calculation.
 
+**Clear All Data**:
+
+- Deletes all entries.
+- Resets document number and operation counter.
+- **Real-Time Filtering**: Filter the transaction table using a search input.
+- **Dynamic Totals**:
+  - Displays the total amount of all visible entries.
+  - Shows subtotals for each payment method (Cash, Multibanco, Bank Transfer).
+- **Form Validations**:
+  - The "Register" button only activates when all fields are filled.
+  - Invalid or empty fields get a red border for visibility.
+- **User Experience Enhancements**:
+  - Current date is automatically set on load.
+  - Next document number is shown in a live hint.
+  - Font Awesome icons used in all buttons for clarity.
+
 ### 📋 Interactive Table
+
 - 📥 **Each entry is recorded** in a table with the following columns:
   - Operation
   - Date
@@ -29,10 +47,12 @@ It's designed to manage financial transactions (entries and exits) for small ser
 - 🗑 **Delete** individual rows.
 
 ### 🔍 Search & Filter
+
 - Type in the search box to filter any column in real-time.
 - Total updates based on filtered results.
 
 ### 📤 Export Options
+
 - 📄 **Export to CSV**:
   - Excludes the "Options" column.
   - Appends the total value at the end.
@@ -55,10 +75,14 @@ It's designed to manage financial transactions (entries and exits) for small ser
 
 ---
 
+
 ## 📦 Report Export
 
 - CSV: Generates a file with the table data (excluding the options column) and total at the end.
 - PDF: Creates a visually formatted file with header, table, and total, including the current date in the filename.
+- CSV: `relatorio_caixa_YYYY-MM-DD.csv`
+- PDF: `relatorio_caixa_YYYY-MM-DD.pdf`
+
 
 ---
 
@@ -68,7 +92,6 @@ It's designed to manage financial transactions (entries and exits) for small ser
 - When the page is opened or refreshed, the saved data is automatically reloaded.
 
 ---
-
 
 ## 📁 Folder Structure
 

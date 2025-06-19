@@ -39,11 +39,11 @@
             />
             <small
               id="proximo-doc"
-              style="color: gray; font-style: italic"></small>
+              style="color: gray; font-style: italic"
+            ></small>
 
             <label for="pagamento">PAGAMENTO</label>
             <select id="pagamento" name="pagamento">
-            
               <option value="Dinheiro">Dinheiro</option>
               <option value="Multibanco">Multibanco</option>
               <option value="Transferência Bancária">
@@ -60,11 +60,17 @@
               step="0.01"
             />
           </div>
-
           <div class="right-form">
             <div class="caixa-total">
-              <span>TOTAL EM CAIXA</span>
+              <span>SALDOS</span>
               <div id="total">0.00 €</div>
+              <div
+                id="totaisPagamento"
+                class="totais-por-pagamento"
+                style="margin-top: 10px"
+              >
+                <!-- Os totais por método aparecerão aqui dinamicamente -->
+              </div>
             </div>
 
             <div class="opcoes">

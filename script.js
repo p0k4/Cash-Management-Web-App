@@ -83,12 +83,22 @@ function atualizarTotalTabela() {
   const linhas = tabela.querySelectorAll("tbody tr");
   let total = 0;
 
+  const totaisPorPagamento = {
+    "Dinheiro": 0,
+    "Multibanco": 0,
+    "Transferência Bancária": 0
+  };
+
   linhas.forEach((linha) => {
     if (linha.style.display !== "none") {
       const valorTexto = linha.cells[4].textContent.replace("€", "").trim();
+      const pagamento = linha.cells[3].textContent.trim();
       const valor = parseFloat(valorTexto.replace(",", "."));
       if (!isNaN(valor)) {
         total += valor;
+        if (totaisPorPagamento[pagamento] !== undefined) {
+          totaisPorPagamento[pagamento] += valor;
+        }
       }
     }
   });
@@ -96,12 +106,28 @@ function atualizarTotalTabela() {
   document.getElementById("totalTabela").textContent =
     "Total: " + total.toFixed(2) + " €";
   document.getElementById("total").textContent = total.toFixed(2) + " €";
+
+  // Atualiza os totais por método de pagamento
+  const divTotaisPorPagamento = document.getElementById("totaisPagamento");
+  if (divTotaisPorPagamento) {
+    divTotaisPorPagamento.innerHTML = `
+      <strong></strong><br/>
+      - Dinheiro: ${totaisPorPagamento["Dinheiro"].toFixed(2)} €<br/>
+      - Multibanco: ${totaisPorPagamento["Multibanco"].toFixed(2)} €<br/>
+      - Transferência Bancária: ${totaisPorPagamento["Transferência Bancária"].toFixed(2)} €
+    `;
+  }
 }
 
 function salvarDadosLocal() {
   const tabela = document.getElementById("tabelaRegistos").querySelector("tbody");
-  const linhas = tabela.querySelectorAll("tr");
   const dados = [];
+  if (!tabela) {
+    localStorage.setItem("caixaPiscinaDados", JSON.stringify(dados));
+    localStorage.setItem("contadorOperacao", contadorOperacao.toString());
+    return;
+  }
+  const linhas = tabela.querySelectorAll("tr");
 
   linhas.forEach(linha => {
     const celulas = linha.querySelectorAll("td");
@@ -231,7 +257,7 @@ function criarBotoesOpcoes(linha) {
 
         if (i === 3) {
           const select = document.createElement("select");
-          ["Dinheiro", "Multibanco", "Transferência bancária"].forEach(opcao => {
+          ["Dinheiro", "Multibanco", "Transferência Bancária"].forEach(opcao => {
             const opt = document.createElement("option");
             opt.value = opcao;
             opt.textContent = opcao;
