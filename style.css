@@ -260,6 +260,6 @@ input::placeholder {
   cursor: pointer;
 }
 
-.btn-apagar-tudo:hover {
+.btn-apagar-tudo:hover { 
   background-color: #c82333;
 }
