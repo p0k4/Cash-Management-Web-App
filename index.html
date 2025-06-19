@@ -106,7 +106,7 @@
   window.onload = function () {
     // Only open a new window if this is the top-level window and not already a popup
     if (window.opener == null && window.name !== "cashAppPopup") {
-      const newWin = window.open("index.html", "_blank", "width=1040,height=900");
+      const newWin = window.open("index.html", "_blank", "width=1040,height=1040");
       if (newWin) {
         newWin.name = "cashAppPopup";
         window.close(); // Fecha a janela original
