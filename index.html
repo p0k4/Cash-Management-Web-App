@@ -14,24 +14,26 @@
 <body onload="setarDataAtual(); document.getElementById('operacao').value = 'Operação 1'">
   <div class="container">
     <header>
-      <h1>Cash Management</h1>
+      <h1>Cash </br>Management</h1>
+      <img src="assets/images/562-5629201_cash-management-icon-clipart-png-download-cash-flow.png" alt="Ícone de de app" class="icone-main" />
+
     </header>
 
     <main>
       <div class="form-section">
         <div class="left-form">
           <label for="operacao">OPERAÇÃO</label>
-          <input type="text" id="operacao" name="operacao" readonly />
+          <input type="text" id="operacao" name="operacao" class="input-pequeno" readonly />
 
           <label for="data">DATA</label>
-          <input type="date" id="data" name="data" />
+          <input type="date" id="data" name="data" class="input-pequeno" />
 
           <label for="num-doc">Nº DOC</label>
-          <input type="number" id="num-doc" placeholder="Insire o Nº DOC" name="num-doc" required />
+          <input type="number" id="num-doc" placeholder="Insire o Nº DOC" name="num-doc" class="input-medio" required />
           <small id="proximo-doc" style="color: gray; font-style: italic"></small>
 
           <label for="pagamento">PAGAMENTO</label>
-          <select id="pagamento" name="pagamento">
+          <select id="pagamento" name="pagamento"class="input-medio">
             <option value="Dinheiro">Dinheiro</option>
             <option value="Multibanco">Multibanco</option>
             <option value="Transferência Bancária">
@@ -40,13 +42,13 @@
           </select>
 
           <label for="valor">VALOR</label>
-          <input type="number" id="valor" placeholder="Valor do documento" name="valor" step="0.01" />
+          <input type="number" id="valor" placeholder="Valor em €" name="valor" step="0.01" class="input-pequeno" />
         </div>
         <div class="right-form">
           <div class="caixa-total">
-            <span>SALDOS</span>
-            <div id="total">0.00 €</div>
-            <div id="totaisPagamento" class="totais-por-pagamento" style="margin-top: 10px">
+            <span class="title-opcoes">SALDOS</span>
+            <div class="title-opcoes" id="total">0.00 €</div>
+            <div id="totaisPagamento" class="totais-por-pagamento">
               <!-- Os totais por método aparecerão aqui dinamicamente -->
             </div>
           </div>

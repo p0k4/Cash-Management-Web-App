@@ -10,12 +10,24 @@ body {
 
 /* Container principal */
 .container {
+  position: relative;
   max-width: 1000px;
   margin: 40px auto;
   background: #e2edf4;
   padding: 20px;
   border-radius: 20px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  
+}
+.icone-main {
+  position: absolute;
+  display: block;
+  margin-left: auto;
+  margin-top: 20px;
+  top: 20px;
+  right: 20px;
+  width: 100px;
+  height: auto;
 }
 
 /* Cabeçalho */
@@ -23,9 +35,8 @@ header {
   background-color: #0d4a63;
   color: white;
   padding: 20px;
-  text-align: center;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
+  text-align: left;
+  border-radius: 20px;
 }
 
 /* Formulário */
@@ -44,6 +55,14 @@ header {
 }
 
 /* Campos */
+
+.input-pequeno {
+  width: 110px; 
+}
+.input-medio {
+  width: 200px; 
+}
+
 label {
   display: block;
   margin-top: 15px;
@@ -77,15 +96,25 @@ select:focus {
   background-color: #0d4a63;
   color: white;
   padding: 20px;
+  margin-bottom: 15px;
   text-align: center;
   border-radius: 15px;
 }
 
 #totaisPagamento {
-  font-size: 14px;
-  margin-top: 10px;
+  font-size: 15px;
   line-height: 1.5;
+  color: #040404;
+  text-align: center;
+  border-radius: 40px;
+  background-color: #f3f5f6;
+  border: 2px solid #0d4a63;
+  padding-top: 4px;  /* antes podia estar muito alto */
+  padding-bottom: 10px;
+  margin-top: 10px;
 }
+
+
 
 /* Botões */
 .acao-botoes {
@@ -183,6 +212,7 @@ button:disabled {
   display: flex;
   align-items: center;
   gap: 10px;
+  width: 500px;
 }
 
 .campo-pesquisa input {
