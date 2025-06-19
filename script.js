@@ -165,9 +165,12 @@ function criarBotoesOpcoes(linha) {
   btnApagar.innerHTML = '<i class="fas fa-trash"></i> Apagar';
   btnApagar.className = "btn-apagar-linha";
   btnApagar.onclick = function () {
+     const confirmar = confirm("Tem certeza que deseja apagar esta linha?");
+  if (confirmar) {
     linha.remove();
     salvarDadosLocal();
     atualizarTotalTabela();
+  }
   };
 
   const btnEditar = document.createElement("button");

@@ -30,8 +30,14 @@
             <input type="date" id="data" name="data" />
 
             <label for="num-doc">Nº DOC</label>
-            <input type="text" id="num-doc" placeholder="Número do documento" name="num-doc" />
-
+            <input
+              type="number"
+              id="num-doc"
+              name="num-doc"
+              placeholder="Número do documento"
+              min="0"
+              step="1"
+            />
             <label for="pagamento">PAGAMENTO</label>
             <select id="pagamento" name="pagamento">
               <option value=""></option>
@@ -43,7 +49,13 @@
             </select>
 
             <label for="valor">VALOR</label>
-            <input type="number" id="valor" placeholder="Valor do documento" name="valor" step="0.01" />
+            <input
+              type="number"
+              id="valor"
+              placeholder="Valor do documento"
+              name="valor"
+              step="0.01"
+            />
           </div>
 
           <div class="right-form">
