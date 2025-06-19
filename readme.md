@@ -1,6 +1,6 @@
 # 📘 Cash Management Web App
 
-Caixa Piscina is a simple and interactive **cash register system** built using only HTML, CSS, and JavaScript.  
+Cash Management Web App is a simple and interactive **cash register system** built using only HTML, CSS, and JavaScript.  
 It's designed to manage financial transactions (entries and exits) for small services, such as a **public swimming pool cash box**.
 
 ---
