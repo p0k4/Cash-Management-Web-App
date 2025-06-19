@@ -1,5 +1,5 @@
 let contadorOperacao = 1;
-
+let contadorDoc = null;
 function setarDataAtual() {
   const dataInput = document.getElementById("data");
   const hoje = new Date().toISOString().split("T")[0];
@@ -11,7 +11,22 @@ function registar() {
   if (!isNaN(valor)) {
     const operacao = "Operação " + contadorOperacao;
     const data = document.getElementById("data").value;
-    const numDoc = document.getElementById("num-doc").value;
+let numDocInput = document.getElementById("num-doc");
+
+if (contadorDoc === null) {
+  contadorDoc = parseInt(numDocInput.value);
+  if (isNaN(contadorDoc)) {
+    alert("Insira um número de documento válido para iniciar.");
+    return;
+  }
+  numDocInput.readOnly = true;
+}
+
+const numDoc = contadorDoc;
+contadorDoc++;
+numDocInput.value = contadorDoc;
+localStorage.setItem("contadorDoc", contadorDoc);
+atualizarHintProximoDoc();
     const pagamento = document.getElementById("pagamento").value;
 
     const tabela = document.getElementById("tabelaRegistos").querySelector("tbody");
@@ -24,9 +39,9 @@ function registar() {
 
     criarBotoesOpcoes(novaLinha);
 
+    contadorOperacao++;
     salvarDadosLocal();
     apagar();
-    contadorOperacao++;
     atualizarTotalTabela();
   } else {
     alert("Insira um valor válido!");
@@ -34,7 +49,11 @@ function registar() {
 }
 
 function apagar() {
-  document.getElementById("operacao").value = "Operação " + contadorOperacao;
+  // Only set "operacao" if the element exists
+  const operacaoInput = document.getElementById("operacao");
+  if (operacaoInput) {
+    operacaoInput.value = "Operação " + contadorOperacao;
+  }
   setarDataAtual();
   document.getElementById("num-doc").value = "";
   document.getElementById("pagamento").value = "Dinheiro";
@@ -102,6 +121,15 @@ function salvarDadosLocal() {
 }
 
 function carregarDadosLocal() {
+
+  const docSalvo = parseInt(localStorage.getItem("contadorDoc"));
+if (!isNaN(docSalvo)) {
+  contadorDoc = docSalvo;
+  const input = document.getElementById("num-doc");
+  input.value = contadorDoc;
+  input.readOnly = true;
+  atualizarHintProximoDoc();
+}
   const dados = JSON.parse(localStorage.getItem("caixaPiscinaDados"));
   const contadorSalvo = parseInt(localStorage.getItem("contadorOperacao"));
 
@@ -143,18 +171,27 @@ function validarFormulario() {
       campo.classList.remove("campo-invalido");
     }
   });
-
-  document.getElementById("btnRegistar").disabled = !valido;
+  return valido;
 }
 
+// Adiciona listeners de input aos campos do formulário
 ["data", "num-doc", "pagamento", "valor"].forEach((id) => {
-  document.getElementById(id).addEventListener("input", validarFormulario);
+  const el = document.getElementById(id);
+  if (el) {
+    el.addEventListener("input", validarFormulario);
+  }
 });
 
+// Inicialização ao carregar a página
 window.addEventListener("DOMContentLoaded", () => {
   carregarDadosLocal();
   setarDataAtual();
   validarFormulario();
+  // Set initial value for "operacao" if the input exists
+  const operacaoInput = document.getElementById("operacao");
+  if (operacaoInput) {
+    operacaoInput.value = "Operação " + contadorOperacao;
+  }
 });
 
 function criarBotoesOpcoes(linha) {
@@ -327,8 +364,33 @@ document.getElementById("btnApagarTudo").addEventListener("click", function () {
 
   localStorage.removeItem("caixaPiscinaDados");
   localStorage.removeItem("contadorOperacao");
+  localStorage.removeItem("contadorDoc");
+contadorDoc = null;
+
+const inputDoc = document.getElementById("num-doc");
+inputDoc.readOnly = false;
+inputDoc.value = "";
+atualizarHintProximoDoc();
 
   contadorOperacao = 1;
   apagar(); // redefine os campos
   atualizarTotalTabela();
-});
+})
+function atualizarHintProximoDoc() {
+  const input = document.getElementById("num-doc");
+  if (contadorDoc !== null) {
+    input.placeholder = `Próximo Nº DOC: ${contadorDoc}`;
+  } else {
+    input.placeholder = "Insire o Nº DOC";
+  }
+}
+
+// Adiciona listeners para exportação se existirem os botões
+const btnExportarRelatorio = document.getElementById("btnExportarRelatorio");
+if (btnExportarRelatorio) {
+  btnExportarRelatorio.addEventListener("click", exportarRelatorio);
+}
+const btnExportarPDF = document.getElementById("btnExportarPDF");
+if (btnExportarPDF) {
+  btnExportarPDF.addEventListener("click", exportarPDF);
+}

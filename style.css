@@ -158,9 +158,9 @@ tbody tr:nth-child(even) {
   background-color: #c9302c;
 }
 
-.campo-invalido {
+/* .campo-invalido {
   border: 2px solid red !important;
-}
+} */
 
 .right-form .opcoes {
   display: flex;
@@ -262,4 +262,11 @@ input::placeholder {
 
 .btn-apagar-tudo:hover { 
   background-color: #c82333;
+}
+
+.doc-hint {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 2px;
+  display: block;
 }

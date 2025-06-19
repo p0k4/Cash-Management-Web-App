@@ -33,14 +33,17 @@
             <input
               type="number"
               id="num-doc"
+              placeholder="Insire o Nº DOC"
               name="num-doc"
-              placeholder="Número do documento"
-              min="0"
-              step="1"
+              required
             />
+            <small
+              id="proximo-doc"
+              style="color: gray; font-style: italic"></small>
+
             <label for="pagamento">PAGAMENTO</label>
             <select id="pagamento" name="pagamento">
-              <option value=""></option>
+            
               <option value="Dinheiro">Dinheiro</option>
               <option value="Multibanco">Multibanco</option>
               <option value="Transferência Bancária">
