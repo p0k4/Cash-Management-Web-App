@@ -243,3 +243,9 @@ button i {
 button:hover {
   background-color: #00509e;
 }
+
+input::placeholder {
+  color: #999;
+  font-style: italic;
+  font-size: medium;
+}

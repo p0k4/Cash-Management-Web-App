@@ -30,7 +30,7 @@
             <input type="date" id="data" name="data" />
 
             <label for="num-doc">Nº DOC</label>
-            <input type="text" id="num-doc" name="num-doc" />
+            <input type="text" id="num-doc" placeholder="Número do documento" name="num-doc" />
 
             <label for="pagamento">PAGAMENTO</label>
             <select id="pagamento" name="pagamento">
@@ -42,7 +42,7 @@
             </select>
 
             <label for="valor">VALOR</label>
-            <input type="number" id="valor" name="valor" step="0.01" />
+            <input type="number" id="valor" placeholder="Valor do documento" name="valor" step="0.01" />
           </div>
 
           <div class="right-form">
@@ -53,7 +53,7 @@
 
             <div class="opcoes">
               <span>OPÇÕES</span>
-              <button id="btnRegistar" onclick="registar()" disabled>
+              <button id="btnRegistar" onclick="registar()">
                 <i class="fas fa-save"></i> REGISTAR
               </button>
               <div style="display: flex; gap: 10px; margin-top: 10px">

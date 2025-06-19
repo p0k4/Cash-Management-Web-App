@@ -55,6 +55,21 @@ It's designed to manage financial transactions (entries and exits) for small ser
 
 ---
 
+## 📦 Report Export
+
+- CSV: Generates a file with the table data (excluding the options column) and total at the end.
+- PDF: Creates a visually formatted file with header, table, and total, including the current date in the filename.
+
+---
+
+## 💾 Local Storage
+
+- All information entered in the table is automatically saved to `localStorage`.
+- When the page is opened or refreshed, the saved data is automatically reloaded.
+
+---
+
+
 ## 📁 Folder Structure
 
 ```
@@ -96,7 +111,6 @@ It's designed to manage financial transactions (entries and exits) for small ser
 
 ## 📌 Future Ideas
 
-- Persistent local storage
 - Filter by date or type
 - Login system
 - Category/tags per operation
