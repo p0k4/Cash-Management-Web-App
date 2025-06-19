@@ -14,9 +14,7 @@ function registar() {
     const numDoc = document.getElementById("num-doc").value;
     const pagamento = document.getElementById("pagamento").value;
 
-    const tabela = document
-      .getElementById("tabelaRegistos")
-      .querySelector("tbody");
+    const tabela = document.getElementById("tabelaRegistos").querySelector("tbody");
     const novaLinha = tabela.insertRow();
     novaLinha.insertCell(0).textContent = operacao;
     novaLinha.insertCell(1).textContent = data;
@@ -24,23 +22,7 @@ function registar() {
     novaLinha.insertCell(3).textContent = pagamento;
     novaLinha.insertCell(4).textContent = valor.toFixed(2) + " €";
 
-    const cellOpcoes = novaLinha.insertCell(5);
-    cellOpcoes.classList.add("col-opcoes");
-
-    const btn = document.createElement("button");
-    btn.innerHTML = '<i class="fas fa-trash"></i> Apagar';
-    btn.className = "btn-apagar-linha";
-    btn.onclick = function () {
-      novaLinha.remove();
-      salvarDadosLocal();
-      atualizarTotalTabela();
-    };
-    cellOpcoes.appendChild(btn);
-
-    const btnEditar = document.createElement("button");
-    btnEditar.innerHTML = '<i class="fas fa-edit"></i> Editar';
-    btnEditar.className = "btn-editar-linha";
-    cellOpcoes.appendChild(btnEditar);
+    criarBotoesOpcoes(novaLinha);
 
     salvarDadosLocal();
     apagar();
@@ -132,24 +114,7 @@ function carregarDadosLocal() {
       novaLinha.insertCell(2).textContent = reg.numDoc;
       novaLinha.insertCell(3).textContent = reg.pagamento;
       novaLinha.insertCell(4).textContent = parseFloat(reg.valor).toFixed(2) + " €";
-
-      const cellOpcoes = novaLinha.insertCell(5);
-      cellOpcoes.classList.add("col-opcoes");
-
-      const btnApagar = document.createElement("button");
-      btnApagar.innerHTML = '<i class="fas fa-trash"></i> Apagar';
-      btnApagar.className = "btn-apagar-linha";
-      btnApagar.onclick = function () {
-        novaLinha.remove();
-        salvarDadosLocal();
-        atualizarTotalTabela();
-      };
-      cellOpcoes.appendChild(btnApagar);
-
-      const btnEditar = document.createElement("button");
-      btnEditar.innerHTML = '<i class="fas fa-edit"></i> Editar';
-      btnEditar.className = "btn-editar-linha";
-      cellOpcoes.appendChild(btnEditar);
+      criarBotoesOpcoes(novaLinha);
     });
   }
 
@@ -182,14 +147,103 @@ function validarFormulario() {
   document.getElementById("btnRegistar").disabled = !valido;
 }
 
+["data", "num-doc", "pagamento", "valor"].forEach((id) => {
+  document.getElementById(id).addEventListener("input", validarFormulario);
+});
+
 window.addEventListener("DOMContentLoaded", () => {
-  ["data", "num-doc", "pagamento", "valor"].forEach((id) => {
-    document.getElementById(id).addEventListener("input", validarFormulario);
-  });
   carregarDadosLocal();
   setarDataAtual();
   validarFormulario();
 });
+
+function criarBotoesOpcoes(linha) {
+  const cellOpcoes = linha.insertCell(5);
+  cellOpcoes.classList.add("col-opcoes");
+
+  const btnApagar = document.createElement("button");
+  btnApagar.innerHTML = '<i class="fas fa-trash"></i> Apagar';
+  btnApagar.className = "btn-apagar-linha";
+  btnApagar.onclick = function () {
+    linha.remove();
+    salvarDadosLocal();
+    atualizarTotalTabela();
+  };
+
+  const btnEditar = document.createElement("button");
+  btnEditar.innerHTML = '<i class="fas fa-edit"></i> Editar';
+  btnEditar.className = "btn-editar-linha";
+
+  let valoresOriginais = [];
+
+  btnEditar.onclick = function () {
+    const estaEditando = btnEditar.textContent.includes("Guardar");
+
+    if (!estaEditando) {
+      valoresOriginais = [];
+
+      for (let i = 0; i <= 4; i++) {
+        const cell = linha.cells[i];
+        const valorOriginal = cell.textContent.replace(" €", "");
+        valoresOriginais.push(valorOriginal);
+
+        cell.textContent = "";
+
+        if (i === 3) {
+          const select = document.createElement("select");
+          ["Dinheiro", "Multibanco", "Transferência bancária"].forEach(opcao => {
+            const opt = document.createElement("option");
+            opt.value = opcao;
+            opt.textContent = opcao;
+            if (opcao === valorOriginal) opt.selected = true;
+            select.appendChild(opt);
+          });
+          cell.appendChild(select);
+        } else {
+          const input = document.createElement("input");
+          input.value = valorOriginal;
+          input.style.width = "100%";
+          cell.appendChild(input);
+        }
+      }
+
+      btnEditar.innerHTML = '<i class="fas fa-check"></i> Guardar';
+
+      const btnCancelar = document.createElement("button");
+      btnCancelar.innerHTML = '<i class="fas fa-times"></i> Cancelar';
+      btnCancelar.className = "btn-cancelar-linha";
+      btnCancelar.onclick = function () {
+        for (let i = 0; i <= 4; i++) {
+          linha.cells[i].textContent = i === 4
+            ? parseFloat(valoresOriginais[i]).toFixed(2) + " €"
+            : valoresOriginais[i];
+        }
+        btnEditar.innerHTML = '<i class="fas fa-edit"></i> Editar';
+        btnCancelar.remove();
+        salvarDadosLocal();
+        atualizarTotalTabela();
+      };
+
+      cellOpcoes.appendChild(btnCancelar);
+    } else {
+      for (let i = 0; i <= 4; i++) {
+        const input = linha.cells[i].querySelector("input, select");
+        const valor = i === 4
+          ? parseFloat(input.value).toFixed(2) + " €"
+          : input.value;
+        linha.cells[i].textContent = valor;
+      }
+      btnEditar.innerHTML = '<i class="fas fa-edit"></i> Editar';
+      const cancelarBtn = cellOpcoes.querySelector(".btn-cancelar-linha");
+      if (cancelarBtn) cancelarBtn.remove();
+      salvarDadosLocal();
+      atualizarTotalTabela();
+    }
+  };
+
+  cellOpcoes.appendChild(btnApagar);
+  cellOpcoes.appendChild(btnEditar);
+};
 
 function exportarRelatorio() {
   const tabela = document.getElementById("tabelaRegistos");
@@ -223,8 +277,7 @@ function exportarRelatorio() {
   link.href = url;
   link.download = `relatorio_caixa_${new Date().toISOString().split("T")[0]}.csv`;
   link.click();
-};
-
+}
 function exportarPDF() {
   const doc = new jspdf.jsPDF();
   const data = [];
@@ -260,5 +313,4 @@ function exportarPDF() {
   doc.text(`Total: ${total.toFixed(2)} €`, 14, doc.autoTable.previous.finalY + 10);
 
   doc.save(`relatorio_caixa_${new Date().toISOString().split("T")[0]}.pdf`);
-};
-
+}
