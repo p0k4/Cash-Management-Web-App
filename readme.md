@@ -4,7 +4,10 @@ Caixa Piscina is a simple and interactive **cash register system** built using o
 It's designed to manage financial transactions (entries and exits) for small services, such as a **public swimming pool cash box**.
 
 ---
-
+![Screenshot](assets/images/readme/front-app.png)
+![Screenshot](assets/images/readme/table.png)
+![Screenshot](assets/images/readme/pdf.png)
+---
 ## 🚀 Features
 
 ### 💾 Operation Management
