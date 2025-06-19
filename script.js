@@ -11,25 +11,27 @@ function registar() {
   if (!isNaN(valor)) {
     const operacao = "Operação " + contadorOperacao;
     const data = document.getElementById("data").value;
-let numDocInput = document.getElementById("num-doc");
+    let numDocInput = document.getElementById("num-doc");
 
-if (contadorDoc === null) {
-  contadorDoc = parseInt(numDocInput.value);
-  if (isNaN(contadorDoc)) {
-    alert("Insira um número de documento válido para iniciar.");
-    return;
-  }
-  numDocInput.readOnly = true;
-}
+    if (contadorDoc === null) {
+      contadorDoc = parseInt(numDocInput.value);
+      if (isNaN(contadorDoc)) {
+        alert("Insira um número de documento válido para iniciar.");
+        return;
+      }
+      numDocInput.readOnly = true;
+    }
 
-const numDoc = contadorDoc;
-contadorDoc++;
-numDocInput.value = contadorDoc;
-localStorage.setItem("contadorDoc", contadorDoc);
-atualizarHintProximoDoc();
+    const numDoc = contadorDoc;
+    contadorDoc++;
+    numDocInput.value = contadorDoc;
+    localStorage.setItem("contadorDoc", contadorDoc);
+    atualizarHintProximoDoc();
     const pagamento = document.getElementById("pagamento").value;
 
-    const tabela = document.getElementById("tabelaRegistos").querySelector("tbody");
+    const tabela = document
+      .getElementById("tabelaRegistos")
+      .querySelector("tbody");
     const novaLinha = tabela.insertRow();
     novaLinha.insertCell(0).textContent = operacao;
     novaLinha.insertCell(1).textContent = data;
@@ -63,7 +65,9 @@ function apagar() {
 function filtrarTabela() {
   const input = document.getElementById("filtroTabela");
   const filtro = input.value.toLowerCase();
-  const tabela = document.getElementById("tabelaRegistos").getElementsByTagName("tbody")[0];
+  const tabela = document
+    .getElementById("tabelaRegistos")
+    .getElementsByTagName("tbody")[0];
   const linhas = tabela.getElementsByTagName("tr");
   for (let i = 0; i < linhas.length; i++) {
     let mostrar = false;
@@ -84,9 +88,9 @@ function atualizarTotalTabela() {
   let total = 0;
 
   const totaisPorPagamento = {
-    "Dinheiro": 0,
-    "Multibanco": 0,
-    "Transferência Bancária": 0
+    Dinheiro: 0,
+    Multibanco: 0,
+    "Transferência Bancária": 0,
   };
 
   linhas.forEach((linha) => {
@@ -114,13 +118,17 @@ function atualizarTotalTabela() {
       <strong></strong><br/>
       - Dinheiro: ${totaisPorPagamento["Dinheiro"].toFixed(2)} €<br/>
       - Multibanco: ${totaisPorPagamento["Multibanco"].toFixed(2)} €<br/>
-      - Transferência Bancária: ${totaisPorPagamento["Transferência Bancária"].toFixed(2)} €
+      - Transferência Bancária: ${totaisPorPagamento[
+        "Transferência Bancária"
+      ].toFixed(2)} €
     `;
   }
 }
 
 function salvarDadosLocal() {
-  const tabela = document.getElementById("tabelaRegistos").querySelector("tbody");
+  const tabela = document
+    .getElementById("tabelaRegistos")
+    .querySelector("tbody");
   const dados = [];
   if (!tabela) {
     localStorage.setItem("caixaPiscinaDados", JSON.stringify(dados));
@@ -129,7 +137,7 @@ function salvarDadosLocal() {
   }
   const linhas = tabela.querySelectorAll("tr");
 
-  linhas.forEach(linha => {
+  linhas.forEach((linha) => {
     const celulas = linha.querySelectorAll("td");
     if (celulas.length >= 5) {
       dados.push({
@@ -137,7 +145,7 @@ function salvarDadosLocal() {
         data: celulas[1].textContent,
         numDoc: celulas[2].textContent,
         pagamento: celulas[3].textContent,
-        valor: celulas[4].textContent.replace(" €", "")
+        valor: celulas[4].textContent.replace(" €", ""),
       });
     }
   });
@@ -147,27 +155,29 @@ function salvarDadosLocal() {
 }
 
 function carregarDadosLocal() {
-
   const docSalvo = parseInt(localStorage.getItem("contadorDoc"));
-if (!isNaN(docSalvo)) {
-  contadorDoc = docSalvo;
-  const input = document.getElementById("num-doc");
-  input.value = contadorDoc;
-  input.readOnly = true;
-  atualizarHintProximoDoc();
-}
+  if (!isNaN(docSalvo)) {
+    contadorDoc = docSalvo;
+    const input = document.getElementById("num-doc");
+    input.value = contadorDoc;
+    input.readOnly = true;
+    atualizarHintProximoDoc();
+  }
   const dados = JSON.parse(localStorage.getItem("caixaPiscinaDados"));
   const contadorSalvo = parseInt(localStorage.getItem("contadorOperacao"));
 
   if (dados && Array.isArray(dados)) {
-    dados.forEach(reg => {
-      const tabela = document.getElementById("tabelaRegistos").querySelector("tbody");
+    dados.forEach((reg) => {
+      const tabela = document
+        .getElementById("tabelaRegistos")
+        .querySelector("tbody");
       const novaLinha = tabela.insertRow();
       novaLinha.insertCell(0).textContent = reg.operacao;
       novaLinha.insertCell(1).textContent = reg.data;
       novaLinha.insertCell(2).textContent = reg.numDoc;
       novaLinha.insertCell(3).textContent = reg.pagamento;
-      novaLinha.insertCell(4).textContent = parseFloat(reg.valor).toFixed(2) + " €";
+      novaLinha.insertCell(4).textContent =
+        parseFloat(reg.valor).toFixed(2) + " €";
       criarBotoesOpcoes(novaLinha);
     });
   }
@@ -228,12 +238,12 @@ function criarBotoesOpcoes(linha) {
   btnApagar.innerHTML = '<i class="fas fa-trash"></i> Apagar';
   btnApagar.className = "btn-apagar-linha";
   btnApagar.onclick = function () {
-     const confirmar = confirm("Tem certeza que deseja apagar esta linha?");
-  if (confirmar) {
-    linha.remove();
-    salvarDadosLocal();
-    atualizarTotalTabela();
-  }
+    const confirmar = confirm("Tem certeza que deseja apagar esta linha?");
+    if (confirmar) {
+      linha.remove();
+      salvarDadosLocal();
+      atualizarTotalTabela();
+    }
   };
 
   const btnEditar = document.createElement("button");
@@ -257,13 +267,15 @@ function criarBotoesOpcoes(linha) {
 
         if (i === 3) {
           const select = document.createElement("select");
-          ["Dinheiro", "Multibanco", "Transferência Bancária"].forEach(opcao => {
-            const opt = document.createElement("option");
-            opt.value = opcao;
-            opt.textContent = opcao;
-            if (opcao === valorOriginal) opt.selected = true;
-            select.appendChild(opt);
-          });
+          ["Dinheiro", "Multibanco", "Transferência Bancária"].forEach(
+            (opcao) => {
+              const opt = document.createElement("option");
+              opt.value = opcao;
+              opt.textContent = opcao;
+              if (opcao === valorOriginal) opt.selected = true;
+              select.appendChild(opt);
+            }
+          );
           cell.appendChild(select);
         } else {
           const input = document.createElement("input");
@@ -280,9 +292,10 @@ function criarBotoesOpcoes(linha) {
       btnCancelar.className = "btn-cancelar-linha";
       btnCancelar.onclick = function () {
         for (let i = 0; i <= 4; i++) {
-          linha.cells[i].textContent = i === 4
-            ? parseFloat(valoresOriginais[i]).toFixed(2) + " €"
-            : valoresOriginais[i];
+          linha.cells[i].textContent =
+            i === 4
+              ? parseFloat(valoresOriginais[i]).toFixed(2) + " €"
+              : valoresOriginais[i];
         }
         btnEditar.innerHTML = '<i class="fas fa-edit"></i> Editar';
         btnCancelar.remove();
@@ -294,9 +307,8 @@ function criarBotoesOpcoes(linha) {
     } else {
       for (let i = 0; i <= 4; i++) {
         const input = linha.cells[i].querySelector("input, select");
-        const valor = i === 4
-          ? parseFloat(input.value).toFixed(2) + " €"
-          : input.value;
+        const valor =
+          i === 4 ? parseFloat(input.value).toFixed(2) + " €" : input.value;
         linha.cells[i].textContent = valor;
       }
       btnEditar.innerHTML = '<i class="fas fa-edit"></i> Editar';
@@ -306,10 +318,10 @@ function criarBotoesOpcoes(linha) {
       atualizarTotalTabela();
     }
   };
-
-  cellOpcoes.appendChild(btnApagar);
+  btnEditar.style.marginRight = "5px";
   cellOpcoes.appendChild(btnEditar);
-};
+  cellOpcoes.appendChild(btnApagar);
+}
 
 function exportarRelatorio() {
   const tabela = document.getElementById("tabelaRegistos");
@@ -341,7 +353,9 @@ function exportarRelatorio() {
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
-  link.download = `relatorio_caixa_${new Date().toISOString().split("T")[0]}.csv`;
+  link.download = `relatorio_caixa_${
+    new Date().toISOString().split("T")[0]
+  }.csv`;
   link.click();
 }
 function exportarPDF() {
@@ -351,7 +365,7 @@ function exportarPDF() {
 
   const linhas = document.querySelectorAll("#tabelaRegistos tbody tr");
 
-  linhas.forEach(linha => {
+  linhas.forEach((linha) => {
     if (linha.style.display !== "none") {
       const tds = linha.querySelectorAll("td");
       const row = [];
@@ -373,10 +387,14 @@ function exportarPDF() {
   doc.autoTable({
     head: [["Operação", "Data", "Nº Documento", "Pagamento", "Valor"]],
     body: data,
-    startY: 20
+    startY: 20,
   });
 
-  doc.text(`Total: ${total.toFixed(2)} €`, 14, doc.autoTable.previous.finalY + 10);
+  doc.text(
+    `Total: ${total.toFixed(2)} €`,
+    14,
+    doc.autoTable.previous.finalY + 10
+  );
 
   doc.save(`relatorio_caixa_${new Date().toISOString().split("T")[0]}.pdf`);
 }
@@ -385,23 +403,25 @@ document.getElementById("btnApagarTudo").addEventListener("click", function () {
   const confirmar = confirm("Tem certeza que deseja apagar TODOS os dados?");
   if (!confirmar) return;
 
-  const tabela = document.getElementById("tabelaRegistos").querySelector("tbody");
+  const tabela = document
+    .getElementById("tabelaRegistos")
+    .querySelector("tbody");
   tabela.innerHTML = ""; // remove todas as linhas
 
   localStorage.removeItem("caixaPiscinaDados");
   localStorage.removeItem("contadorOperacao");
   localStorage.removeItem("contadorDoc");
-contadorDoc = null;
+  contadorDoc = null;
 
-const inputDoc = document.getElementById("num-doc");
-inputDoc.readOnly = false;
-inputDoc.value = "";
-atualizarHintProximoDoc();
+  const inputDoc = document.getElementById("num-doc");
+  inputDoc.readOnly = false;
+  inputDoc.value = "";
+  atualizarHintProximoDoc();
 
   contadorOperacao = 1;
   apagar(); // redefine os campos
   atualizarTotalTabela();
-})
+});
 function atualizarHintProximoDoc() {
   const input = document.getElementById("num-doc");
   if (contadorDoc !== null) {

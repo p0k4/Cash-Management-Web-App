@@ -1,127 +1,106 @@
 <!DOCTYPE html>
 <html lang="pt">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cash App</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    />
-    <link rel="stylesheet" href="style.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
-  </head>
-  <body
-    onload="setarDataAtual(); document.getElementById('operacao').value = 'Operação 1'"
-  >
-    <div class="container">
-      <header>
-        <h1>Cash Management</h1>
-      </header>
 
-      <main>
-        <div class="form-section">
-          <div class="left-form">
-            <label for="operacao">OPERAÇÃO</label>
-            <input type="text" id="operacao" name="operacao" readonly />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cash App</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
+</head>
 
-            <label for="data">DATA</label>
-            <input type="date" id="data" name="data" />
+<body onload="setarDataAtual(); document.getElementById('operacao').value = 'Operação 1'">
+  <div class="container">
+    <header>
+      <h1>Cash Management</h1>
+    </header>
 
-            <label for="num-doc">Nº DOC</label>
-            <input
-              type="number"
-              id="num-doc"
-              placeholder="Insire o Nº DOC"
-              name="num-doc"
-              required
-            />
-            <small
-              id="proximo-doc"
-              style="color: gray; font-style: italic"
-            ></small>
+    <main>
+      <div class="form-section">
+        <div class="left-form">
+          <label for="operacao">OPERAÇÃO</label>
+          <input type="text" id="operacao" name="operacao" readonly />
 
-            <label for="pagamento">PAGAMENTO</label>
-            <select id="pagamento" name="pagamento">
-              <option value="Dinheiro">Dinheiro</option>
-              <option value="Multibanco">Multibanco</option>
-              <option value="Transferência Bancária">
-                Transferência Bancária
-              </option>
-            </select>
+          <label for="data">DATA</label>
+          <input type="date" id="data" name="data" />
 
-            <label for="valor">VALOR</label>
-            <input
-              type="number"
-              id="valor"
-              placeholder="Valor do documento"
-              name="valor"
-              step="0.01"
-            />
-          </div>
-          <div class="right-form">
-            <div class="caixa-total">
-              <span>SALDOS</span>
-              <div id="total">0.00 €</div>
-              <div
-                id="totaisPagamento"
-                class="totais-por-pagamento"
-                style="margin-top: 10px"
-              >
-                <!-- Os totais por método aparecerão aqui dinamicamente -->
-              </div>
+          <label for="num-doc">Nº DOC</label>
+          <input type="number" id="num-doc" placeholder="Insire o Nº DOC" name="num-doc" required />
+          <small id="proximo-doc" style="color: gray; font-style: italic"></small>
+
+          <label for="pagamento">PAGAMENTO</label>
+          <select id="pagamento" name="pagamento">
+            <option value="Dinheiro">Dinheiro</option>
+            <option value="Multibanco">Multibanco</option>
+            <option value="Transferência Bancária">
+              Transferência Bancária
+            </option>
+          </select>
+
+          <label for="valor">VALOR</label>
+          <input type="number" id="valor" placeholder="Valor do documento" name="valor" step="0.01" />
+        </div>
+        <div class="right-form">
+          <div class="caixa-total">
+            <span>SALDOS</span>
+            <div id="total">0.00 €</div>
+            <div id="totaisPagamento" class="totais-por-pagamento" style="margin-top: 10px">
+              <!-- Os totais por método aparecerão aqui dinamicamente -->
             </div>
+          </div>
 
-            <div class="opcoes">
-              <span>OPÇÕES</span>
-              <button id="btnRegistar" onclick="registar()">
+          <div class="opcoes">
+            <span class="title-opcoes">OPÇÕES</span>
+            </br></br>
+            <div class="acao-botoes">
+              <button id="btnRegistar" class="btn-registar" onclick="registar()">
                 <i class="fas fa-save"></i> REGISTAR
               </button>
               <button type="button" id="btnApagarTudo" class="btn-apagar-tudo">
-                <i class="fas fa-trash-alt"></i> Apagar Tudo
+                <i class="fas fa-trash-alt"></i> APAGAR TUDO
               </button>
-              <div style="display: flex; gap: 10px; margin-top: 10px">
-                <button onclick="exportarRelatorio()">
-                  <i class="fas fa-file-csv"></i> Exportar CSV
-                </button>
-
-                <button onclick="exportarPDF()">
-                  <i class="fas fa-file-pdf"></i> Exportar PDF
-                </button>
-              </div>
             </div>
+          
+          <div class="export-botoes">
+            <button class="btn-exportar btn-csv" onclick="exportarRelatorio()">
+              <i class="fas fa-file-csv"></i> Exportar CSV
+            </button>
+
+            <button class="btn-exportar btn-pdf" onclick="exportarPDF()">
+              <i class="fas fa-file-pdf"></i> Exportar PDF
+            </button>
+            
+          </div>
           </div>
         </div>
+      </div>
 
-        <div class="campo-pesquisa">
-          <i class="fas fa-search"></i>
-          <input
-            type="text"
-            id="filtroTabela"
-            onkeyup="filtrarTabela()"
-            placeholder="Pesquisar..."
-          />
-        </div>
+      <div class="campo-pesquisa">
+        <i class="fas fa-search"></i>
+        <input type="text" id="filtroTabela" onkeyup="filtrarTabela()" placeholder="Pesquisar..." />
+      </div>
 
-        <section class="tabela-registos">
-          <table id="tabelaRegistos">
-            <thead>
-              <tr>
-                <th>OPERAÇÃO</th>
-                <th>DATA</th>
-                <th>Nº DOC</th>
-                <th>MODO PAGAMENTO</th>
-                <th>VALOR</th>
-                <th>OPÇÕES</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-          <div id="totalTabela">Total: 0.00 €</div>
-        </section>
-      </main>
-    </div>
-    <script src="script.js"></script>
-  </body>
+      <section class="tabela-registos">
+        <table id="tabelaRegistos">
+          <thead>
+            <tr>
+              <th>OPERAÇÃO</th>
+              <th>DATA</th>
+              <th>Nº DOC</th>
+              <th>MODO PAGAMENTO</th>
+              <th>VALOR</th>
+              <th>OPÇÕES</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <div id="totalTabela">Total: 0.00 €</div>
+      </section>
+    </main>
+  </div>
+  <script src="script.js"></script>
+</body>
+
 </html>

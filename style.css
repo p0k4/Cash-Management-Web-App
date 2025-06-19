@@ -1,280 +1,269 @@
+
+/* Reset e base */
 body {
+  font-family: 'Segoe UI', sans-serif;
+  background: radial-gradient(circle at top, #d0dee6, #a2b4c0);
   margin: 0;
-  font-family: Arial, sans-serif;
+  padding: 0;
+  color: #003344;
 }
 
+/* Container principal */
 .container {
   max-width: 1000px;
-  margin: auto;
+  margin: 40px auto;
+  background: #e2edf4;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
+/* Cabeçalho */
 header {
   background-color: #0d4a63;
   color: white;
+  padding: 20px;
   text-align: center;
-  padding: 20px 0;
-  border: #00394d;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 }
 
-h1 {
-  margin: 0;
-  font-size: 48px;
-}
-
+/* Formulário */
 .form-section {
   display: flex;
-  background-color: #cedfe8;
-  padding: 20px;
-  border: 2px solid #0d4a63;
-  border-radius: 6px;
-  margin: 20px 0;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 20px;
 }
 
-.left-form {
-  flex: 1;
-  margin: 10px;
-  display: flex;
-  flex-direction: column;
-  padding-left: 10px;
-  padding-right: 150px;
-  padding-top: 0px;
-  padding-bottom: 0px;
-}
+.left-form,
 .right-form {
   flex: 1;
-  margin: 10px;
-  display: flex;
-  flex-direction: column;
+  min-width: 300px;
+  padding-right: 15px;
 }
 
+/* Campos */
 label {
-  background-color: #0d4a63;
-  color: white;
-  padding: 5px;
-  margin-top: 10px;
+  display: block;
+  margin-top: 15px;
+  font-weight: bold;
+  color: #0d4a63;
 }
 
 input,
 select {
+  width: 100%;
   padding: 10px;
-  margin-bottom: 10px;
-  border: none;
-  font-size: 16px;
+  margin-top: 4px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 14px;
 }
 
+input:focus,
+select:focus {
+  outline: none;
+  border-color: #0d4a63;
+  box-shadow: 0 0 5px rgba(13, 74, 99, 0.4);
+}
+
+.campo-invalido {
+  border: 2px solid red !important;
+}
+
+/* Saldos */
 .caixa-total {
   background-color: #0d4a63;
   color: white;
-  font-size: 30px;
+  padding: 20px;
   text-align: center;
-  padding: 10px;
-  margin-bottom: 20px;
+  border-radius: 15px;
 }
 
-.caixa-total #total {
-  font-size: 24px;
-  margin-top: 20px;
-  font-size: 25px;
-}
-
-
-.totais-por-pagamento {
+#totaisPagamento {
   font-size: 14px;
-  color: #f3eeee;
-  line-height: 1.6;
-}
-.opcoes span {
-  background-color: #0d4a63;
-  color: white;
-  padding-left: 200px;
-  padding-right: 200px;
-  padding-top: 30px;
-  padding-bottom: 30px;
-  display: block;
-  text-align: center;
-  font-weight: bold;
+  margin-top: 10px;
+  line-height: 1.5;
 }
 
+/* Botões */
+.acao-botoes {
+  justify-content: center;
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  
+}
+.export-botoes {
+  justify-content: center;
+  display: flex;
+  gap: 10px;
+ padding-top: 15px;
+}
 button {
   background-color: #0d4a63;
   color: white;
-  border: 2px solid #00394d;
-  padding: 10px;
-  margin: 5px 0;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 10px;
   cursor: pointer;
-  font-size: 16px;
-  border-radius: 6px;
+  font-weight: bold;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+  
 }
 
 button:hover {
-  background-color: #007bb5;
+  background-color: #146283;
 }
 
-.tabela-registos {
-  padding: 20px;
-  overflow-x: auto;
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
 }
 
+.btn-apagar-linha {
+  background-color: #dc3545; /* Vermelho */
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-editar-linha {
+  background-color: #ffc107; /* Amarelo */
+  color: black;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-editar-linha i,
+.btn-apagar-linha i {
+  margin-right: 4px;
+}
+
+/* Botão apagar tudo */
+.btn-apagar-tudo {
+  background-color: #d9534f;
+}
+
+.btn-apagar-tudo:hover {
+  background-color: #c9302c;
+}
+
+/* Opções */
+.opcoes {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #7297a6;
+  color: white;
+  text-align: center;
+  border-radius: 15px;
+    border: 2px solid #0d4a63;
+}
+.title-opcoes {
+  margin-top: 20px;
+  padding: 10px;
+  padding-left: 180px;
+  padding-right: 180px;
+  background-color: #e1e5e7;
+  color: rgb(20, 5, 5);
+  text-align: center;
+  border-radius: 15px;
+    border: 2px solid #0d4a63;
+}
+
+/* Campo de pesquisa */
+.campo-pesquisa {
+  margin: 30px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.campo-pesquisa input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px solid #0d4a63;
+}
+
+.campo-pesquisa input:focus {
+  border-color: red;
+  outline: none;
+}
+
+/* Tabela */
 table {
   width: 100%;
-  border-collapse: collapse;
-  background-color: white;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+th, td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #ccc;
+  text-align: left;
 }
 
 th {
   background-color: #0d4a63;
   color: white;
-  padding: 10px;
-  text-align: left;
-}
-
-td {
-  border: 1px solid #000;
-  padding: 8px;
-}
-
-tbody tr:nth-child(even) {
-  background-color: #f2f2f2;
+  font-weight: bold;
 }
 
 #totalTabela {
-  margin-top: 10px;
-  font-weight: bold;
-  font-size: 18px;
   text-align: right;
-}
-
-#filtroTabela {
-  margin: 20px 0;
-  padding: 10px;
-  font-size: 16px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.btn-apagar-linha {
-  background-color: #d9534f;
-  color: white;
-  border: none;
-  padding: 6px 12px;
-  font-size: 14px;
-  cursor: pointer;
-  border-radius: 4px;
-}
-
-.btn-apagar-linha:hover {
-  background-color: #c9302c;
-}
-
-/* .campo-invalido {
-  border: 2px solid red !important;
-} */
-
-.right-form .opcoes {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  gap: 20px;
-  margin-top: 20px;
-}
-
-.campo-pesquisa {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  border: 2px solid #0d4a63;
-  padding: 10px;
-  border-radius: 6px;
-  margin: 20px 0;
-}
-
-.campo-pesquisa i {
-  color: #0d4a63;
-  font-size: 18px;
-}
-
-.campo-pesquisa input {
-  border: none;
-  outline: none;
-  font-size: 16px;
-  width: 100%;
-}
-
-.campo-pesquisa:focus-within {
-  border-color: red;
-}
-
-.btn-editar-linha {
-  background-color: #f0ad4e;
-  color: white;
-  border: none;
-  padding: 6px 10px;
-  margin-left: 5px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.btn-editar-linha:hover {
-  background-color: #ec971f;
-}
-
-.btn-cancelar-linha {
-  background-color: #999;
-  color: white;
-  border: none;
-  padding: 6px 10px;
-  margin-left: 5px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.btn-cancelar-linha:hover {
-  background-color: #666;
-}
-
-button {
-  padding: 8px 12px;
-  border: none;
-  background-color: #003366;
-  color: white;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-button i {
-  margin-right: 5px;
-}
-
-button:hover {
-  background-color: #00509e;
-}
-
-input::placeholder {
-  color: #999;
-  font-style: italic;
-  font-size: medium;
-}
-
-.btn-apagar-tudo {
-  background-color: #dc3545;
-  color: white;
-  border: none;
-  padding: 8px 12px;
   margin-top: 10px;
-  border-radius: 4px;
+  font-weight: bold;
+  color: #0d4a63;
+}
+
+.btn-registar {
+  background-color: #28a745;         /* verde sucesso */
+  border-radius: 10px;
+  padding: 10px 18px;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  border: none;
   cursor: pointer;
+  box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.btn-apagar-tudo:hover {
-  background-color: #c82333;
+.btn-registar:hover {
+  background-color: #218838;
+  box-shadow: 0 6px 14px rgba(40, 167, 69, 0.5);
 }
 
-.doc-hint {
-  font-size: 0.85rem;
-  color: #666;
-  margin-top: 2px;
-  display: block;
+.btn-registar:disabled {
+  background-color: #94d3a2;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Estilo base para exportar */
+.btn-exportar {
+  background-color: #ffc107; /* amarelo */
+  color: #212529;
+  font-weight: bold;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(255, 193, 7, 0.3);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-exportar:hover {
+  background-color: #e0a800;
+  box-shadow: 0 6px 14px rgba(255, 193, 7, 0.5);
 }
