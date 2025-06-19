@@ -317,3 +317,18 @@ function exportarPDF() {
 
   doc.save(`relatorio_caixa_${new Date().toISOString().split("T")[0]}.pdf`);
 }
+
+document.getElementById("btnApagarTudo").addEventListener("click", function () {
+  const confirmar = confirm("Tem certeza que deseja apagar TODOS os dados?");
+  if (!confirmar) return;
+
+  const tabela = document.getElementById("tabelaRegistos").querySelector("tbody");
+  tabela.innerHTML = ""; // remove todas as linhas
+
+  localStorage.removeItem("caixaPiscinaDados");
+  localStorage.removeItem("contadorOperacao");
+
+  contadorOperacao = 1;
+  apagar(); // redefine os campos
+  atualizarTotalTabela();
+});
