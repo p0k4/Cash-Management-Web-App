@@ -8,6 +8,14 @@ function setarDataAtual() {
 
 function registar() {
   const valor = parseFloat(document.getElementById("valor").value);
+  const pagamento = document.getElementById("pagamento").value;
+
+  // Verifica se o método de pagamento foi selecionado
+  if (!pagamento) {
+    alert("Por favor, selecione um método de pagamento.");
+    return;
+  }
+
   if (!isNaN(valor)) {
     const operacao = "Operação " + contadorOperacao;
     const data = document.getElementById("data").value;
@@ -27,7 +35,6 @@ function registar() {
     numDocInput.value = contadorDoc;
     localStorage.setItem("contadorDoc", contadorDoc);
     atualizarHintProximoDoc();
-    const pagamento = document.getElementById("pagamento").value;
 
     const tabela = document
       .getElementById("tabelaRegistos")
@@ -43,13 +50,12 @@ function registar() {
 
     contadorOperacao++;
     salvarDadosLocal();
-    apagar();
+    apagar(); // Esta função vai limpar os campos
     atualizarTotalTabela();
   } else {
     alert("Insira um valor válido!");
   }
 }
-
 function apagar() {
   // Only set "operacao" if the element exists
   const operacaoInput = document.getElementById("operacao");
@@ -60,6 +66,7 @@ function apagar() {
   document.getElementById("num-doc").value = "";
   document.getElementById("pagamento").value = "Dinheiro";
   document.getElementById("valor").value = "";
+  
 }
 
 function filtrarTabela() {
