@@ -13,7 +13,7 @@
     <header>
       <h1>Registos de Caixa</h1>
     </header>
-
+    
     <div class="opcoes">
       <button type="button" id="btnApagarTudo" class="btn-apagar-tudo">
         <i class="fas fa-trash-alt"></i> APAGAR TABELA
@@ -25,12 +25,12 @@
         <i class="fas fa-file-csv"></i> Exportar CSV
       </button>
     </div>
-
+    
     <div class="campo-pesquisa">
       <i class="fas fa-search"></i>
       <input type="text" id="filtroTabela" onkeyup="filtrarTabela()" placeholder="Pesquisar..." />
     </div>
-
+    
     <section class="tabela-registos">
       <table id="tabelaRegistos">
         <thead>
@@ -47,15 +47,16 @@
       </table>
       <div id="totalTabela">Total: 0.00 €</div>
     </section>
+    <div class="style="position: fixed; right: 150px;">
+      <a href="index.html" class="btn-registar" style="text-decoration: none;">
+        <i class="fas fa-arrow-left"></i> Voltar
+      </a>
+    </div>
+   
   </div>
-
-  <div class="acao-botoes" style="justify-content: flex-end; margin: 30px;">
-    <a href="index.html" class="btn-registar" style="text-decoration: none;">
-      <i class="fas fa-arrow-left"></i> Voltar
-    </a>
-  </div>
-
-
+  
+  
+  
   <script src="script.js"></script>
 </body>
 </html>

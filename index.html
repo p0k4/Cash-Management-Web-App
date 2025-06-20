@@ -68,6 +68,9 @@
               <button id="btnRegistar" class="btn-registar" onclick="registar()">
                 <i class="fas fa-save"></i> REGISTAR
 
+                <button type="button" id="btnApagarTudo" class="btn-apagar-tudo">
+        <i class="fas fa-trash-alt"></i> APAGAR 
+      </button>
             </div>
             <div class="acao-botoes" style="justify-content: center; display: flex; margin-top: 10px;">
               <a href="tabela.html">
@@ -79,7 +82,13 @@
           </div>
         </div>
       </div>
+      <div style="position: relative; height: 10vh;">
 
+        <button class="btn-fechar" onclick="fecharJanela()" style="position: absolute; bottom: 0; right: 20px;">
+          <i class="fas fa-times"></i> Fechar Janela
+        </button>
+        
+      </div>
 
 
 
@@ -106,13 +115,14 @@
     window.onload = function () {
       // Only open a new window if this is the top-level window and not already a popup
       if (window.opener == null && window.name !== "cashAppPopup") {
-        const newWin = window.open("index.html", "_blank", "width=1069,height=720");
+        const newWin = window.open("index.html", "_blank", "width=1069,height=780");
         if (newWin) {
           newWin.name = "cashAppPopup";
           window.close(); // Fecha a janela original
         }
       }
     };
+
   </script>
   <script src="script.js"></script>
 </body>

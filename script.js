@@ -233,6 +233,13 @@ window.addEventListener("DOMContentLoaded", () => {
   if (operacaoInput) {
     operacaoInput.value = "Operação " + contadorOperacao;
   }
+  document.addEventListener("keydown", function (event) {
+  if (event.key === "Enter") {
+    event.preventDefault(); // Evita submissão ou recarregamento padrão
+    const btnRegistar = document.getElementById("btnRegistar");
+    if (btnRegistar) btnRegistar.click();
+  }
+});
 });
 
 function criarBotoesOpcoes(linha) {
@@ -505,3 +512,10 @@ const btnExportarPDF = document.getElementById("btnExportarPDF");
 if (btnExportarPDF) {
   btnExportarPDF.addEventListener("click", exportarPDF);
 }
+
+  function fecharJanela() {
+    const confirmar = confirm("Tem certeza que deseja fechar esta janela?");
+    if (confirmar) {
+      window.close();
+    }
+  }
