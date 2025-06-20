@@ -10,6 +10,56 @@ It's designed to manage financial transactions (entries and exits) for small ser
 ---
 ## 🚀 Features
 
+	•	Register Operations: Input form for new transactions with fields for date, document number, payment method, and value.
+	•	Auto-increment Document Number: Starts from the first valid value entered and auto-increments.
+	•	Real-Time Balance Calculation: Shows total balance and totals per payment method.
+	•	Transaction Table: Displays all recorded operations in a sortable, filterable table.
+	•	Filter/Search Table: Filter the table in real-time by any keyword.
+	•	Edit & Delete Rows: Allows editing or removing individual records directly in the table.
+	•	Clear All Records: A button to clear all transaction records.
+	•	Export to CSV/PDF: Export table data to CSV or PDF using jsPDF and AutoTable.
+	•	Responsive Design: Works well on both desktop and mobile.
+	•	Data Persistence: Uses localStorage to persist records across sessions.
+	•	Separate Table View: A dedicated tabela.html that loads and displays all saved transactions.
+	•	Open Table in New Window: Option to open the transaction table in a separate browser window using window.open().
+
+🛠 Technologies Used
+	•	HTML5 & CSS3
+	•	JavaScript (Vanilla)
+	•	Font Awesome for icons
+	•	jsPDF and jsPDF-AutoTable for PDF export
+
+📁 Project Structure
+
+📦 cash-management-app
+│
+├── index.html        # Main form for input
+├── tabela.html       # Transaction records view
+├── style.css         # Styling for both pages
+├── script.js         # JavaScript logic
+└── assets/           # Icons/images
+
+📦 Installation
+
+No build tools required. Simply open index.html in a browser.
+
+# Clone this repository or download the zip
+$ git clone https://github.com/your-username/cash-management-app.git
+
+# Open with browser
+$ cd cash-management-app
+$ open index.html
+
+🧭 How to Use
+	1.	Open index.html in a modern browser.
+	2.	Fill in the form with the transaction details.
+	3.	Click REGISTAR to add the transaction to the internal table.
+	4.	Click Ver Tabela to:
+	•	Open tabela.html in a new tab or popup window.
+	•	See all previously registered transactions.
+	•	Export or filter results.
+
+
 ### 💾 Operation Management
 
 - 🧾 **Auto-generated operation number** (Operação 1, Operação 2, ...).
@@ -104,18 +154,8 @@ It's designed to manage financial transactions (entries and exits) for small ser
 ├── style.css          # All visual styles
 ├── script.js          # App logic
 ```
-
 ---
 
-## ✅ Usage
-
-1. Clone or download the project.
-2. Open `index.html` in a web browser.
-3. Fill out the form and press **REGISTAR**.
-4. Use the table to manage data.
-5. Export reports using **CSV** or **PDF**.
-
----
 
 ## 🔒 Notes
 
