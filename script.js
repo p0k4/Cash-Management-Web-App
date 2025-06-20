@@ -109,7 +109,10 @@ function atualizarTotalTabela() {
 
   document.getElementById("totalTabela").textContent =
     "Total: " + total.toFixed(2) + " €";
-  document.getElementById("total").textContent = total.toFixed(2) + " €";
+  const totalEl = document.getElementById("total");
+  if (totalEl) {
+    totalEl.textContent = total.toFixed(2) + " €";
+  }
 
   // Atualiza os totais por método de pagamento
   const divTotaisPorPagamento = document.getElementById("totaisPagamento");
@@ -159,9 +162,11 @@ function carregarDadosLocal() {
   if (!isNaN(docSalvo)) {
     contadorDoc = docSalvo;
     const input = document.getElementById("num-doc");
-    input.value = contadorDoc;
-    input.readOnly = true;
-    atualizarHintProximoDoc();
+    if (input) {
+      input.value = contadorDoc;
+      input.readOnly = true;
+      atualizarHintProximoDoc();
+    }
   }
   const dados = JSON.parse(localStorage.getItem("caixaPiscinaDados"));
   const contadorSalvo = parseInt(localStorage.getItem("contadorOperacao"));

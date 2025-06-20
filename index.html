@@ -9,6 +9,13 @@
   <link rel="stylesheet" href="style.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
+
+  <style>
+    .tabela-registos.oculta {
+      display: none;
+    }
+  </style>
+
 </head>
 
 <body onload="setarDataAtual(); document.getElementById('operacao').value = 'Operação 1'">
@@ -79,28 +86,34 @@
         </div>
       </div>
 
-      <div class="campo-pesquisa">
-        <i class="fas fa-search"></i>
-        <input type="text" id="filtroTabela" onkeyup="filtrarTabela()" placeholder="Pesquisar..." />
-      </div>
+      
+<div class="acao-botoes" style="justify-content: flex-end; margin-top: 30px;">
+  <a href="tabela.html">
+    <button class="btn-exportar">
+      <i class="fas fa-table"></i> Ver Tabela
+    </button>
+  </a>
+</div>
 
-      <section class="tabela-registos">
-        <table id="tabelaRegistos">
-          <thead>
-            <tr>
-              <th>OPERAÇÃO</th>
-              <th>DATA</th>
-              <th>Nº DOC</th>
-              <th>MODO PAGAMENTO</th>
-              <th>VALOR</th>
-              <th>OPÇÕES</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-        <div id="totalTabela">Total: 0.00 €</div>
-      </section>
-    </main>
+    
+<section class="tabela-registos oculta">
+  <table id="tabelaRegistos">
+    <thead>
+      <tr>
+        <th>OPERAÇÃO</th>
+        <th>DATA</th>
+        <th>Nº DOC</th>
+        <th>MODO PAGAMENTO</th>
+        <th>VALOR</th>
+        <th>OPÇÕES</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <div id="totalTabela">Total: 0.00 €</div>
+</section>
+
+</main>
   </div>
   <script>
   window.onload = function () {
