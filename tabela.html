@@ -1,35 +1,35 @@
 <!DOCTYPE html>
 <html lang="pt">
-
 <head>
-  <meta charset="UTF-8" />
-  <title>Tabela de Registos</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link rel="stylesheet" href="style.css" />
-</head>
+<meta charset="UTF-8" />
+<title>Tabela de Registos</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link rel="stylesheet" href="style.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
 
 <body>
   <div class="container">
     <header>
       <h1>Registos de Caixa</h1>
     </header>
+
     <div class="opcoes">
-      </button>
       <button type="button" id="btnApagarTudo" class="btn-apagar-tudo">
         <i class="fas fa-trash-alt"></i> APAGAR TABELA
       </button>
-      <button class="btn-exportar btn-pdf" onclick="exportarPDF()">
+      <button class="btn-exportar btn-pdf" id="btnExportarPDF">
         <i class="fas fa-file-pdf"></i> Exportar PDF
       </button>
       <button class="btn-exportar btn-csv" onclick="exportarRelatorio()">
         <i class="fas fa-file-csv"></i> Exportar CSV
       </button>
     </div>
+
     <div class="campo-pesquisa">
       <i class="fas fa-search"></i>
       <input type="text" id="filtroTabela" onkeyup="filtrarTabela()" placeholder="Pesquisar..." />
     </div>
-
 
     <section class="tabela-registos">
       <table id="tabelaRegistos">
@@ -50,15 +50,12 @@
   </div>
 
   <div class="acao-botoes" style="justify-content: flex-end; margin: 30px;">
-    <a href="index.html">
-      <button class="btn-registar">
-        <i class="fas fa-arrow-left"></i> Voltar
-      </button>
+    <a href="index.html" class="btn-registar" style="text-decoration: none;">
+      <i class="fas fa-arrow-left"></i> Voltar
     </a>
   </div>
 
+
   <script src="script.js"></script>
-
 </body>
-
 </html>

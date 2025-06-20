@@ -363,46 +363,6 @@ function exportarRelatorio() {
   }.csv`;
   link.click();
 }
-function exportarPDF() {
-  const doc = new jspdf.jsPDF();
-  const data = [];
-  let total = 0;
-
-  const linhas = document.querySelectorAll("#tabelaRegistos tbody tr");
-
-  linhas.forEach((linha) => {
-    if (linha.style.display !== "none") {
-      const tds = linha.querySelectorAll("td");
-      const row = [];
-      for (let i = 0; i < 5; i++) {
-        let texto = tds[i].textContent.trim().replace(" €", "");
-        if (i === 4) {
-          const num = parseFloat(texto.replace(",", "."));
-          if (!isNaN(num)) total += num;
-          row.push(num.toFixed(2) + " €");
-        } else {
-          row.push(texto);
-        }
-      }
-      data.push(row);
-    }
-  });
-
-  doc.text("Relatório de Caixa", 14, 15);
-  doc.autoTable({
-    head: [["Operação", "Data", "Nº Documento", "Pagamento", "Valor"]],
-    body: data,
-    startY: 20,
-  });
-
-  doc.text(
-    `Total: ${total.toFixed(2)} €`,
-    14,
-    doc.autoTable.previous.finalY + 10
-  );
-
-  doc.save(`relatorio_caixa_${new Date().toISOString().split("T")[0]}.pdf`);
-}
 
 document.getElementById("btnApagarTudo").addEventListener("click", function () {
   const confirmar = confirm("Tem certeza que deseja apagar TODOS os dados?");
@@ -427,6 +387,106 @@ document.getElementById("btnApagarTudo").addEventListener("click", function () {
   apagar(); // redefine os campos
   atualizarTotalTabela();
 });
+function atualizarHintProximoDoc() {
+  const input = document.getElementById("num-doc");
+  if (contadorDoc !== null) {
+    input.placeholder = `Próximo Nº DOC: ${contadorDoc}`;
+  } else {
+    input.placeholder = "Insire o Nº DOC";
+  }
+}
+
+function exportarRelatorio() {
+  const tabela = document.getElementById("tabelaRegistos");
+  let csv = "";
+  let total = 0;
+  const linhas = tabela.querySelectorAll("tr");
+
+  linhas.forEach((linha, idx) => {
+    if (linha.style.display !== "none") {
+      const celulas = linha.querySelectorAll("th, td");
+      let linhaCSV = [];
+      celulas.forEach((celula, index) => {
+        if (index === 5) return; // Ignora a coluna Opções
+        let texto = celula.textContent.replace(/\n/g, "").trim();
+        linhaCSV.push(texto);
+        if (idx > 0 && index === 4) {
+          let valor = parseFloat(texto.replace("€", "").replace(",", "."));
+          if (!isNaN(valor)) total += valor;
+        }
+      });
+      csv += linhaCSV.join(";") + "\n";
+    }
+  });
+
+  csv += "\n------------------------------";
+  csv += "\nTotal;;;;" + total.toFixed(2) + " €";
+
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `relatorio_caixa_${new Date().toISOString().split("T")[0]}.csv`;
+  link.click();
+}
+function exportarPDF() {
+  const doc = new jspdf.jsPDF();
+  const data = [];
+  let total = 0;
+
+  const linhas = document.querySelectorAll("#tabelaRegistos tbody tr");
+
+  linhas.forEach(linha => {
+    if (linha.style.display !== "none") {
+      const tds = linha.querySelectorAll("td");
+      const row = [];
+      for (let i = 0; i < 5; i++) {
+        let texto = tds[i].textContent.trim().replace(" €", "");
+        if (i === 4) {
+          const num = parseFloat(texto.replace(",", "."));
+          if (!isNaN(num)) total += num;
+          row.push(num.toFixed(2) + " €");
+        } else {
+          row.push(texto);
+        }
+      }
+      data.push(row);
+    }
+  });
+
+  doc.text("Relatório de Caixa", 14, 15);
+  doc.autoTable({
+    head: [["Operação", "Data", "Nº Documento", "Pagamento", "Valor"]],
+    body: data,
+    startY: 20
+  });
+
+  doc.text(`Total: ${total.toFixed(2)} €`, 14, doc.autoTable.previous.finalY + 10);
+
+  doc.save(`relatorio_caixa_${new Date().toISOString().split("T")[0]}.pdf`);
+}
+
+document.getElementById("btnApagarTudo").addEventListener("click", function () {
+  const confirmar = confirm("Tem certeza que deseja apagar TODOS os dados?");
+  if (!confirmar) return;
+
+  const tabela = document.getElementById("tabelaRegistos").querySelector("tbody");
+  tabela.innerHTML = ""; // remove todas as linhas
+
+  localStorage.removeItem("caixaPiscinaDados");
+  localStorage.removeItem("contadorOperacao");
+  localStorage.removeItem("contadorDoc");
+contadorDoc = null;
+
+const inputDoc = document.getElementById("num-doc");
+inputDoc.readOnly = false;
+inputDoc.value = "";
+atualizarHintProximoDoc();
+
+  contadorOperacao = 1;
+  apagar(); // redefine os campos
+  atualizarTotalTabela();
+})
 function atualizarHintProximoDoc() {
   const input = document.getElementById("num-doc");
   if (contadorDoc !== null) {
