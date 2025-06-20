@@ -29,8 +29,6 @@ It's designed to manage financial transactions (entries and exits) for small ser
 	•	Font Awesome for icons
 	•	jsPDF and jsPDF-AutoTable for PDF export
 
-📁 Project Structure
-
 📦 cash-management-app
 │
 ├── index.html        # Main form for input
