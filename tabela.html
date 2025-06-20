@@ -1,57 +1,64 @@
 <!DOCTYPE html>
 <html lang="pt">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Tabela de Registos</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    />
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <div class="container">
-      <header>
-        <h1>Registos de Caixa</h1>
-      </header>
 
-      <div class="campo-pesquisa">
-        <i class="fas fa-search"></i>
-        <input
-          type="text"
-          id="filtroTabela"
-          onkeyup="filtrarTabela()"
-          placeholder="Pesquisar..."
-        />
-      </div>
+<head>
+  <meta charset="UTF-8" />
+  <title>Tabela de Registos</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
 
-      <section class="tabela-registos">
-        <table id="tabelaRegistos">
-          <thead>
-            <tr>
-              <th>OPERAÇÃO</th>
-              <th>DATA</th>
-              <th>Nº DOC</th>
-              <th>MODO PAGAMENTO</th>
-              <th>VALOR</th>
-              <th>OPÇÕES</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-        <div id="totalTabela">Total: 0.00 €</div>
-      </section>
+<body>
+  <div class="container">
+    <header>
+      <h1>Registos de Caixa</h1>
+    </header>
+    <div class="opcoes">
+      </button>
+      <button type="button" id="btnApagarTudo" class="btn-apagar-tudo">
+        <i class="fas fa-trash-alt"></i> APAGAR TABELA
+      </button>
+      <button class="btn-exportar btn-pdf" onclick="exportarPDF()">
+        <i class="fas fa-file-pdf"></i> Exportar PDF
+      </button>
+      <button class="btn-exportar btn-csv" onclick="exportarRelatorio()">
+        <i class="fas fa-file-csv"></i> Exportar CSV
+      </button>
+    </div>
+    <div class="campo-pesquisa">
+      <i class="fas fa-search"></i>
+      <input type="text" id="filtroTabela" onkeyup="filtrarTabela()" placeholder="Pesquisar..." />
     </div>
 
-    <div class="acao-botoes" style="justify-content: flex-end; margin: 30px;">
-      <a href="index.html">
-        <button class="btn-registar">
-          <i class="fas fa-arrow-left"></i> Voltar
-        </button>
-      </a>
-    </div>
 
-    <script src="script.js"></script>
-   
-  </body>
+    <section class="tabela-registos">
+      <table id="tabelaRegistos">
+        <thead>
+          <tr>
+            <th>OPERAÇÃO</th>
+            <th>DATA</th>
+            <th>Nº DOC</th>
+            <th>MODO PAGAMENTO</th>
+            <th>VALOR</th>
+            <th>OPÇÕES</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <div id="totalTabela">Total: 0.00 €</div>
+    </section>
+  </div>
+
+  <div class="acao-botoes" style="justify-content: flex-end; margin: 30px;">
+    <a href="index.html">
+      <button class="btn-registar">
+        <i class="fas fa-arrow-left"></i> Voltar
+      </button>
+    </a>
+  </div>
+
+  <script src="script.js"></script>
+
+</body>
+
 </html>
