@@ -9,7 +9,7 @@ It's designed to manage financial transactions (entries and exits) for small ser
 ![Screenshot](assets/images/readme/pdf.png)
 ---
 ## 🚀 Features
-
+<p align="justify">
 	•	Register Operations: Input form for new transactions with fields for date, document number, payment method, and value.
 	•	Auto-increment Document Number: Starts from the first valid value entered and auto-increments.
 	•	Real-Time Balance Calculation: Shows total balance and totals per payment method.
@@ -22,7 +22,7 @@ It's designed to manage financial transactions (entries and exits) for small ser
 	•	Data Persistence: Uses localStorage to persist records across sessions.
 	•	Separate Table View: A dedicated tabela.html that loads and displays all saved transactions.
 	•	Open Table in New Window: Option to open the transaction table in a separate browser window using window.open().
-
+</p>
 🛠 Technologies Used
 	•	HTML5 & CSS3
 	•	JavaScript (Vanilla)
