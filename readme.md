@@ -29,14 +29,6 @@ It's designed to manage financial transactions (entries and exits) for small ser
 	•	Font Awesome for icons
 	•	jsPDF and jsPDF-AutoTable for PDF export
 
-📦 cash-management-app
-│
-├── index.html        # Main form for input
-├── tabela.html       # Transaction records view
-├── style.css         # Styling for both pages
-├── script.js         # JavaScript logic
-└── assets/           # Icons/images
-
 📦 Installation
 
 No build tools required. Simply open index.html in a browser.
@@ -147,10 +139,11 @@ $ open index.html
 ## 📁 Folder Structure
 
 ```
-📦 caixa_piscina/
+📦 cash-management-app/
 ├── index.html         # Main page
 ├── style.css          # All visual styles
 ├── script.js          # App logic
+└── assets/           # Icons/images
 ```
 ---
 
