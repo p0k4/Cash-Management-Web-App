@@ -298,7 +298,6 @@ function criarBotoesOpcoes(linha) {
         const cell = linha.cells[i];
         const valorOriginal = cell.textContent.replace(" €", "");
         valoresOriginais.push(valorOriginal);
-
         cell.textContent = "";
 
         if (i === 3) {
@@ -308,11 +307,30 @@ function criarBotoesOpcoes(linha) {
               const opt = document.createElement("option");
               opt.value = opcao;
               opt.textContent = opcao;
-              if (opcao === valorOriginal) opt.selected = true;
+              if (valorOriginal.startsWith(opcao)) opt.selected = true;
               select.appendChild(opt);
             }
           );
+
+          const opTPAInput = document.createElement("input");
+          opTPAInput.type = "text";
+          opTPAInput.placeholder = "OP TPA";
+          opTPAInput.style.marginLeft = "0px";
+          opTPAInput.style.width = "180px"; // 👈 ajusta aqui o tamanho como quiseres
+          opTPAInput.style.display = valorOriginal.startsWith("Multibanco")
+            ? "inline-block"
+            : "none";
+          opTPAInput.value = valorOriginal.includes("OP TPA")
+            ? valorOriginal.split("OP TPA:")[1]?.replace(")", "").trim()
+            : "";
+          select.addEventListener("change", () => {
+            opTPAInput.style.display =
+              select.value === "Multibanco" ? "inline-block" : "none";
+            if (select.value !== "Multibanco") opTPAInput.value = "";
+          });
+
           cell.appendChild(select);
+          cell.appendChild(opTPAInput);
         } else {
           const input = document.createElement("input");
           input.value = valorOriginal;
@@ -342,10 +360,20 @@ function criarBotoesOpcoes(linha) {
       cellOpcoes.appendChild(btnCancelar);
     } else {
       for (let i = 0; i <= 4; i++) {
-        const input = linha.cells[i].querySelector("input, select");
-        const valor =
-          i === 4 ? parseFloat(input.value).toFixed(2) + " €" : input.value;
-        linha.cells[i].textContent = valor;
+        if (i === 3) {
+          const select = linha.cells[i].querySelector("select");
+          const opTPA = linha.cells[i].querySelector("input");
+          const pagamentoFinal =
+            select.value === "Multibanco" && opTPA.value.trim()
+              ? `${select.value} (OP TPA: ${opTPA.value.trim()})`
+              : select.value;
+          linha.cells[i].textContent = pagamentoFinal;
+        } else {
+          const input = linha.cells[i].querySelector("input");
+          const valor =
+            i === 4 ? parseFloat(input.value).toFixed(2) + " €" : input.value;
+          linha.cells[i].textContent = valor;
+        }
       }
       btnEditar.innerHTML = '<i class="fas fa-edit"></i> Editar';
       const cancelarBtn = cellOpcoes.querySelector(".btn-cancelar-linha");
@@ -354,11 +382,11 @@ function criarBotoesOpcoes(linha) {
       atualizarTotalTabela();
     }
   };
+
   btnEditar.style.marginRight = "5px";
   cellOpcoes.appendChild(btnEditar);
   cellOpcoes.appendChild(btnApagar);
 }
-
 function exportarRelatorio() {
   const tabela = document.getElementById("tabelaRegistos");
   let csv = "";
@@ -467,27 +495,27 @@ function exportarPDF() {
       data.push(row);
     }
   });
-const agora = new Date();
-const dataHora = agora.toLocaleString("pt-PT"); // Ex: "21/06/2025, 22:58:30"
-doc.setFontSize(14); 
-doc.text("Relatório de Caixa", 14, 15);
-doc.setFontSize(9); 
-doc.text(`Exportado em: ${dataHora}`, 14, 22); // <-- linha com data/hora
+  const agora = new Date();
+  const dataHora = agora.toLocaleString("pt-PT"); // Ex: "21/06/2025, 22:58:30"
+  doc.setFontSize(14);
+  doc.text("Relatório de Caixa", 14, 15);
+  doc.setFontSize(9);
+  doc.text(`Exportado em: ${dataHora}`, 14, 22); // <-- linha com data/hora
 
-doc.autoTable({
-  head: [["Operação", "Data", "Nº Documento", "Pagamento", "Valor"]],
-  body: data,
-  startY: 28, // espaço extra para não sobrepor a data
-  headStyles: {
-    fillColor: [13, 74, 99],
-    textColor: [255, 255, 255],
-    fontStyle: 'bold',
-    halign: 'center'
-  }
-});
+  doc.autoTable({
+    head: [["Operação", "Data", "Nº Documento", "Pagamento", "Valor"]],
+    body: data,
+    startY: 28, // espaço extra para não sobrepor a data
+    headStyles: {
+      fillColor: [13, 74, 99],
+      textColor: [255, 255, 255],
+      fontStyle: "bold",
+      halign: "center",
+    },
+  });
   // Corrige para a nova API: doc.lastAutoTable
   const pageWidth = doc.internal.pageSize.getWidth();
-  doc.setFontSize(14); 
+  doc.setFontSize(14);
   const totalText = `Total: ${total.toFixed(2)} €`;
   const textWidth = doc.getTextWidth(totalText);
   doc.text(
