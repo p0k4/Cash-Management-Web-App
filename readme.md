@@ -23,11 +23,6 @@ It's designed to manage financial transactions (entries and exits) for small ser
 	•	Separate Table View: A dedicated tabela.html that loads and displays all saved transactions.
 	•	Open Table in New Window: Option to open the transaction table in a separate browser window using window.open().
 </p>
-🛠 Technologies Used
-	•	HTML5 & CSS3
-	•	JavaScript (Vanilla)
-	•	Font Awesome for icons
-	•	jsPDF and jsPDF-AutoTable for PDF export
 
 📦 Installation
 
