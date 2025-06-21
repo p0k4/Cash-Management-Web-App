@@ -41,14 +41,18 @@
           <small id="proximo-doc" style="color: gray; font-style: italic"></small>
 
           <label for="pagamento">PAGAMENTO</label>
-          <select id="pagamento" name="pagamento" class="input-medio">
-              <option value="" disabled selected>-- Modo pagamento --</option>
-            <option value="Dinheiro">Dinheiro</option>
-            <option value="Multibanco">Multibanco</option>
-            <option value="Transferência Bancária">
-              Transferência Bancária
-            </option>
-          </select>
+<select id="pagamento" name="pagamento" class="input-medio">
+    <option value="" disabled selected>-- Modo pagamento --</option>
+  <option value="Dinheiro">Dinheiro</option>
+  <option value="Multibanco">Multibanco</option>
+  <option value="Transferência Bancária">
+    Transferência Bancária
+  </option>
+</select>
+<div id="campo-tpa" style="display: none;">
+  <label for="op-tpa">OP TPA</label>
+  <input type="text" id="op-tpa" name="op-tpa" placeholder="Código da operação TPA" />
+</div>
 
           <label for="valor">VALOR</label>
           <input type="number" id="valor" placeholder="Valor em €" name="valor" step="0.01" class="input-pequeno" />

@@ -10,6 +10,16 @@ function registar() {
   const valor = parseFloat(document.getElementById("valor").value);
   const pagamento = document.getElementById("pagamento").value;
 
+  let pagamentoFinal = pagamento;
+if (pagamento === "Multibanco") {
+  const opTPA = document.getElementById("op-tpa").value.trim();
+  if (!opTPA) {
+    alert("Por favor, insira o código OP TPA.");
+    return;
+  }
+  pagamentoFinal += ` (OP TPA: ${opTPA})`;
+}
+
   // Verifica se o método de pagamento foi selecionado
   if (!pagamento) {
     alert("Por favor, selecione um método de pagamento.");
@@ -43,7 +53,7 @@ function registar() {
     novaLinha.insertCell(0).textContent = operacao;
     novaLinha.insertCell(1).textContent = data;
     novaLinha.insertCell(2).textContent = numDoc;
-    novaLinha.insertCell(3).textContent = pagamento;
+  novaLinha.insertCell(3).textContent = pagamentoFinal;
     novaLinha.insertCell(4).textContent = valor.toFixed(2) + " €";
 
     criarBotoesOpcoes(novaLinha);
@@ -378,37 +388,7 @@ function exportarRelatorio() {
   link.click();
 }
 
-document.getElementById("btnApagarTudo").addEventListener("click", function () {
-  const confirmar = confirm("Tem certeza que deseja apagar TODOS os dados?");
-  if (!confirmar) return;
-
-  const tabela = document
-    .getElementById("tabelaRegistos")
-    .querySelector("tbody");
-  tabela.innerHTML = ""; // remove todas as linhas
-
-  localStorage.removeItem("caixaPiscinaDados");
-  localStorage.removeItem("contadorOperacao");
-  localStorage.removeItem("contadorDoc");
-  contadorDoc = null;
-
-  const inputDoc = document.getElementById("num-doc");
-  inputDoc.readOnly = false;
-  inputDoc.value = "";
-  atualizarHintProximoDoc();
-
-  contadorOperacao = 1;
-  apagar(); // redefine os campos
-  atualizarTotalTabela();
-});
-function atualizarHintProximoDoc() {
-  const input = document.getElementById("num-doc");
-  if (contadorDoc !== null) {
-    input.placeholder = `Próximo Nº DOC: ${contadorDoc}`;
-  } else {
-    input.placeholder = "Insire o Nº DOC";
-  }
-}
+// Removido bloco duplicado de event listener e função atualizarHintProximoDoc
 
 function exportarRelatorio() {
   const tabela = document.getElementById("tabelaRegistos");
@@ -444,13 +424,20 @@ function exportarRelatorio() {
   link.click();
 }
 function exportarPDF() {
-  const doc = new jspdf.jsPDF();
+  // Verifica se jsPDF está carregado
+  if (!window.jspdf || !window.jspdf.jsPDF || typeof window.jspdf.jsPDF !== "function") {
+    alert("jsPDF ou AutoTable não está carregado corretamente.");
+    return;
+  }
+
+  const { jsPDF } = window.jspdf; // CORRETO!
+  const doc = new jsPDF();
   const data = [];
   let total = 0;
 
   const linhas = document.querySelectorAll("#tabelaRegistos tbody tr");
 
-  linhas.forEach(linha => {
+  linhas.forEach((linha) => {
     if (linha.style.display !== "none") {
       const tds = linha.querySelectorAll("td");
       const row = [];
@@ -472,14 +459,14 @@ function exportarPDF() {
   doc.autoTable({
     head: [["Operação", "Data", "Nº Documento", "Pagamento", "Valor"]],
     body: data,
-    startY: 20
+    startY: 20,
   });
 
-  doc.text(`Total: ${total.toFixed(2)} €`, 14, doc.autoTable.previous.finalY + 10);
+  // Corrige para a nova API: doc.lastAutoTable
+  doc.text(`Total: ${total.toFixed(2)} €`, 14, doc.lastAutoTable.finalY + 10);
 
   doc.save(`relatorio_caixa_${new Date().toISOString().split("T")[0]}.pdf`);
 }
-
 document.getElementById("btnApagarTudo").addEventListener("click", function () {
   const confirmar = confirm("Tem certeza que deseja apagar TODOS os dados?");
   if (!confirmar) return;
@@ -510,6 +497,7 @@ function atualizarHintProximoDoc() {
   }
 }
 
+
 // Adiciona listeners para exportação se existirem os botões
 const btnExportarRelatorio = document.getElementById("btnExportarRelatorio");
 if (btnExportarRelatorio) {
@@ -520,9 +508,18 @@ if (btnExportarPDF) {
   btnExportarPDF.addEventListener("click", exportarPDF);
 }
 
-  function fecharJanela() {
-    const confirmar = confirm("Tem certeza que deseja fechar esta janela?");
-    if (confirmar) {
-      window.close();
-    }
+function fecharJanela() {
+  const confirmar = confirm("Tem certeza que deseja fechar esta janela?");
+  if (confirmar) {
+    window.close();
   }
+}
+document.getElementById("pagamento").addEventListener("change", function () {
+  const campoTPA = document.getElementById("campo-tpa");
+  if (this.value === "Multibanco") {
+    campoTPA.style.display = "block";
+  } else {
+    campoTPA.style.display = "none";
+      document.getElementById("op-tpa").value = ""; // limpa o campo se mudar
+    }
+  });
