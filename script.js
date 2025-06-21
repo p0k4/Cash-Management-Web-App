@@ -10,15 +10,20 @@ function registar() {
   const valor = parseFloat(document.getElementById("valor").value);
   const pagamento = document.getElementById("pagamento").value;
 
-  let pagamentoFinal = pagamento;
-if (pagamento === "Multibanco") {
-  const opTPA = document.getElementById("op-tpa").value.trim();
-  if (!opTPA) {
-    alert("Por favor, insira o código OP TPA.");
+  if (!pagamento) {
+    alert("Por favor, selecione um método de pagamento.");
     return;
   }
-  pagamentoFinal += ` (OP TPA: ${opTPA})`;
-}
+
+  let pagamentoFinal = pagamento;
+  if (pagamento === "Multibanco") {
+    const opTPA = document.getElementById("op-tpa").value.trim();
+    if (!opTPA) {
+      alert("Por favor, insira o código OP TPA.");
+      return;
+    }
+    pagamentoFinal += ` (OP TPA: ${opTPA})`;
+  }
 
   // Verifica se o método de pagamento foi selecionado
   if (!pagamento) {
@@ -53,7 +58,7 @@ if (pagamento === "Multibanco") {
     novaLinha.insertCell(0).textContent = operacao;
     novaLinha.insertCell(1).textContent = data;
     novaLinha.insertCell(2).textContent = numDoc;
-  novaLinha.insertCell(3).textContent = pagamentoFinal;
+    novaLinha.insertCell(3).textContent = pagamentoFinal;
     novaLinha.insertCell(4).textContent = valor.toFixed(2) + " €";
 
     criarBotoesOpcoes(novaLinha);
@@ -74,9 +79,8 @@ function apagar() {
   }
   setarDataAtual();
   document.getElementById("num-doc").value = "";
-  document.getElementById("pagamento").value = "Dinheiro";
+  document.getElementById("pagamento").value = "";
   document.getElementById("valor").value = "";
-  
 }
 
 function filtrarTabela() {
@@ -113,12 +117,16 @@ function atualizarTotalTabela() {
   linhas.forEach((linha) => {
     if (linha.style.display !== "none") {
       const valorTexto = linha.cells[4].textContent.replace("€", "").trim();
-      const pagamento = linha.cells[3].textContent.trim();
+      let pagamento = linha.cells[3].textContent.trim();
+
+      // Remove a parte do OP TPA, se existir
+      const metodoBase = pagamento.split(" (OP TPA")[0].trim();
+
       const valor = parseFloat(valorTexto.replace(",", "."));
       if (!isNaN(valor)) {
         total += valor;
-        if (totaisPorPagamento[pagamento] !== undefined) {
-          totaisPorPagamento[pagamento] += valor;
+        if (totaisPorPagamento[metodoBase] !== undefined) {
+          totaisPorPagamento[metodoBase] += valor;
         }
       }
     }
@@ -144,7 +152,6 @@ function atualizarTotalTabela() {
     `;
   }
 }
-
 function salvarDadosLocal() {
   const tabela = document
     .getElementById("tabelaRegistos")
@@ -251,12 +258,12 @@ window.addEventListener("DOMContentLoaded", () => {
     operacaoInput.value = "Operação " + contadorOperacao;
   }
   document.addEventListener("keydown", function (event) {
-  if (event.key === "Enter") {
-    event.preventDefault(); // Evita submissão ou recarregamento padrão
-    const btnRegistar = document.getElementById("btnRegistar");
-    if (btnRegistar) btnRegistar.click();
-  }
-});
+    if (event.key === "Enter") {
+      event.preventDefault(); // Evita submissão ou recarregamento padrão
+      const btnRegistar = document.getElementById("btnRegistar");
+      if (btnRegistar) btnRegistar.click();
+    }
+  });
 });
 
 function criarBotoesOpcoes(linha) {
@@ -420,12 +427,18 @@ function exportarRelatorio() {
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
-  link.download = `relatorio_caixa_${new Date().toISOString().split("T")[0]}.csv`;
+  link.download = `relatorio_caixa_${
+    new Date().toISOString().split("T")[0]
+  }.csv`;
   link.click();
 }
 function exportarPDF() {
   // Verifica se jsPDF está carregado
-  if (!window.jspdf || !window.jspdf.jsPDF || typeof window.jspdf.jsPDF !== "function") {
+  if (
+    !window.jspdf ||
+    !window.jspdf.jsPDF ||
+    typeof window.jspdf.jsPDF !== "function"
+  ) {
     alert("jsPDF ou AutoTable não está carregado corretamente.");
     return;
   }
@@ -454,16 +467,34 @@ function exportarPDF() {
       data.push(row);
     }
   });
+const agora = new Date();
+const dataHora = agora.toLocaleString("pt-PT"); // Ex: "21/06/2025, 22:58:30"
+doc.setFontSize(14); 
+doc.text("Relatório de Caixa", 14, 15);
+doc.setFontSize(9); 
+doc.text(`Exportado em: ${dataHora}`, 14, 22); // <-- linha com data/hora
 
-  doc.text("Relatório de Caixa", 14, 15);
-  doc.autoTable({
-    head: [["Operação", "Data", "Nº Documento", "Pagamento", "Valor"]],
-    body: data,
-    startY: 20,
-  });
-
+doc.autoTable({
+  head: [["Operação", "Data", "Nº Documento", "Pagamento", "Valor"]],
+  body: data,
+  startY: 28, // espaço extra para não sobrepor a data
+  headStyles: {
+    fillColor: [13, 74, 99],
+    textColor: [255, 255, 255],
+    fontStyle: 'bold',
+    halign: 'center'
+  }
+});
   // Corrige para a nova API: doc.lastAutoTable
-  doc.text(`Total: ${total.toFixed(2)} €`, 14, doc.lastAutoTable.finalY + 10);
+  const pageWidth = doc.internal.pageSize.getWidth();
+  doc.setFontSize(14); 
+  const totalText = `Total: ${total.toFixed(2)} €`;
+  const textWidth = doc.getTextWidth(totalText);
+  doc.text(
+    totalText,
+    pageWidth - textWidth - 14,
+    doc.lastAutoTable.finalY + 10
+  );
 
   doc.save(`relatorio_caixa_${new Date().toISOString().split("T")[0]}.pdf`);
 }
@@ -471,23 +502,25 @@ document.getElementById("btnApagarTudo").addEventListener("click", function () {
   const confirmar = confirm("Tem certeza que deseja apagar TODOS os dados?");
   if (!confirmar) return;
 
-  const tabela = document.getElementById("tabelaRegistos").querySelector("tbody");
+  const tabela = document
+    .getElementById("tabelaRegistos")
+    .querySelector("tbody");
   tabela.innerHTML = ""; // remove todas as linhas
 
   localStorage.removeItem("caixaPiscinaDados");
   localStorage.removeItem("contadorOperacao");
   localStorage.removeItem("contadorDoc");
-contadorDoc = null;
+  contadorDoc = null;
 
-const inputDoc = document.getElementById("num-doc");
-inputDoc.readOnly = false;
-inputDoc.value = "";
-atualizarHintProximoDoc();
+  const inputDoc = document.getElementById("num-doc");
+  inputDoc.readOnly = false;
+  inputDoc.value = "";
+  atualizarHintProximoDoc();
 
   contadorOperacao = 1;
   apagar(); // redefine os campos
   atualizarTotalTabela();
-})
+});
 function atualizarHintProximoDoc() {
   const input = document.getElementById("num-doc");
   if (contadorDoc !== null) {
@@ -496,7 +529,6 @@ function atualizarHintProximoDoc() {
     input.placeholder = "Insire o Nº DOC";
   }
 }
-
 
 // Adiciona listeners para exportação se existirem os botões
 const btnExportarRelatorio = document.getElementById("btnExportarRelatorio");
@@ -520,6 +552,6 @@ document.getElementById("pagamento").addEventListener("change", function () {
     campoTPA.style.display = "block";
   } else {
     campoTPA.style.display = "none";
-      document.getElementById("op-tpa").value = ""; // limpa o campo se mudar
-    }
-  });
+    document.getElementById("op-tpa").value = ""; // limpa o campo se mudar
+  }
+});

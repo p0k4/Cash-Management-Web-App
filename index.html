@@ -21,10 +21,15 @@
 <body onload="setarDataAtual(); document.getElementById('operacao').value = 'Operação 1'">
   <div class="container">
     <header>
-      <h1>Cash </br>Management</h1>
-      <img src="assets/images/562-5629201_cash-management-icon-clipart-png-download-cash-flow.png" alt="Ícone de de app"
-        class="icone-main" />
-
+      <div class="cabecalho-caixa">
+        <div class="texto-cabecalho">
+          <h1>POS<br>Cash Management</h1>
+        </div>
+        <div class="icone-cabecalho">
+          <img src="assets/images/562-5629201_cash-management-icon-clipart-png-download-cash-flow.png"
+            alt="Ícone de Cash Management">
+        </div>
+      </div>
     </header>
 
     <main>
@@ -40,19 +45,22 @@
           <input type="number" id="num-doc" placeholder="Insire o Nº DOC" name="num-doc" class="input-medio" required />
           <small id="proximo-doc" style="color: gray; font-style: italic"></small>
 
-          <label for="pagamento">PAGAMENTO</label>
-<select id="pagamento" name="pagamento" class="input-medio">
-    <option value="" disabled selected>-- Modo pagamento --</option>
-  <option value="Dinheiro">Dinheiro</option>
-  <option value="Multibanco">Multibanco</option>
-  <option value="Transferência Bancária">
-    Transferência Bancária
-  </option>
-</select>
-<div id="campo-tpa" style="display: none;">
-  <label for="op-tpa">OP TPA</label>
-  <input type="text" id="op-tpa" name="op-tpa" placeholder="Código da operação TPA" />
-</div>
+          <div style="display: flex; align-items: flex-end; gap: 10px;">
+            <div>
+              <label for="pagamento">PAGAMENTO</label>
+              <select id="pagamento" name="pagamento" class="input-medio">
+                <option value="" disabled selected>-- Modo pagamento --</option>
+                <option value="Dinheiro">Dinheiro</option>
+                <option value="Multibanco">Multibanco</option>
+                <option value="Transferência Bancária">Transferência Bancária</option>
+              </select>
+            </div>
+
+            <div id="campo-tpa" style="display: none;">
+              <label for="op-tpa">OP TPA</label>
+              <input type="text" id="op-tpa" name="op-tpa" class="input-pequeno" placeholder="Nº OP" />
+            </div>
+          </div>
 
           <label for="valor">VALOR</label>
           <input type="number" id="valor" placeholder="Valor em €" name="valor" step="0.01" class="input-pequeno" />
@@ -72,15 +80,15 @@
             <div class="acao-botoes">
               <button id="btnRegistar" class="btn-registar" onclick="registar()">
                 <i class="fas fa-save"></i> REGISTAR
-
-                <button type="button" id="btnApagarTudo" class="btn-apagar-tudo">
-        <i class="fas fa-trash-alt"></i> APAGAR 
-      </button>
+              </button>
+              <button type="button" id="btnApagarTudo" class="btn-reiniciar-pos" title="Isto irá reiniciar todo o POS. Confirme antes de usar.">
+                <i class="fas fa-sync-alt"></i> REINICIAR
+              </button>
             </div>
             <div class="acao-botoes" style="justify-content: center; display: flex; margin-top: 10px;">
               <a href="tabela.html">
                 <button class="btn-exportar">
-                  <i class="fas fa-table"></i> Ver Tabela
+                  <i class="fas fa-table"></i> MOVIMENTOS
                 </button>
               </a>
             </div>
@@ -92,7 +100,7 @@
         <button class="btn-fechar" onclick="fecharJanela()" style="position: absolute; bottom: 0; right: 20px;">
           <i class="fas fa-times"></i> Fechar Janela
         </button>
-        
+
       </div>
 
 
@@ -120,7 +128,7 @@
     window.onload = function () {
       // Only open a new window if this is the top-level window and not already a popup
       if (window.opener == null && window.name !== "cashAppPopup") {
-        const newWin = window.open("index.html", "_blank", "width=1069,height=780");
+        const newWin = window.open("index.html", "_blank", "width=1920,height=1080");
         if (newWin) {
           newWin.name = "cashAppPopup";
           window.close(); // Fecha a janela original
