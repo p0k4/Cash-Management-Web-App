@@ -29,7 +29,7 @@ It's designed to manage financial transactions (entries and exits) for small ser
 No build tools required. Simply open index.html in a browser.
 
 # Clone this repository or download the zip
-$ git clone https://github.com/your-username/cash-management-app.git
+$ git clone https://github.com/p0k4/Cash-Management-Web-App.git
 
 # Open with browser
 $ cd cash-management-app
