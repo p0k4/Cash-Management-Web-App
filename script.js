@@ -399,9 +399,10 @@ function exportarRelatorio() {
       const celulas = linha.querySelectorAll("th, td");
       let linhaCSV = [];
       celulas.forEach((celula, index) => {
-        if (index === 5) return; // Ignora a coluna Opções
+        if (index === 5) return; // Ignora "Opções"
         let texto = celula.textContent.replace(/\n/g, "").trim();
-        linhaCSV.push(texto);
+        texto = texto.replace(/;/g, ","); // Garante que não há conflitos com separador
+        linhaCSV.push(`"${texto}"`); // Envolve em aspas por segurança
         if (idx > 0 && index === 4) {
           let valor = parseFloat(texto.replace("€", "").replace(",", "."));
           if (!isNaN(valor)) total += valor;
@@ -411,56 +412,16 @@ function exportarRelatorio() {
     }
   });
 
-  csv += "\n------------------------------";
-  csv += "\nTotal;;;;" + total.toFixed(2) + " €";
+  csv += "\n;;;;Total: " + total.toFixed(2) + " €";
 
-  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+  const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
-  link.download = `relatorio_caixa_${
-    new Date().toISOString().split("T")[0]
-  }.csv`;
+  link.download = `relatorio_caixa_${new Date().toISOString().split("T")[0]}.csv`;
   link.click();
 }
 
-// Removido bloco duplicado de event listener e função atualizarHintProximoDoc
-
-function exportarRelatorio() {
-  const tabela = document.getElementById("tabelaRegistos");
-  let csv = "";
-  let total = 0;
-  const linhas = tabela.querySelectorAll("tr");
-
-  linhas.forEach((linha, idx) => {
-    if (linha.style.display !== "none") {
-      const celulas = linha.querySelectorAll("th, td");
-      let linhaCSV = [];
-      celulas.forEach((celula, index) => {
-        if (index === 5) return; // Ignora a coluna Opções
-        let texto = celula.textContent.replace(/\n/g, "").trim();
-        linhaCSV.push(texto);
-        if (idx > 0 && index === 4) {
-          let valor = parseFloat(texto.replace("€", "").replace(",", "."));
-          if (!isNaN(valor)) total += valor;
-        }
-      });
-      csv += linhaCSV.join(";") + "\n";
-    }
-  });
-
-  csv += "\n------------------------------";
-  csv += "\nTotal;;;;" + total.toFixed(2) + " €";
-
-  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = `relatorio_caixa_${
-    new Date().toISOString().split("T")[0]
-  }.csv`;
-  link.click();
-}
 function exportarPDF() {
   if (!window.jspdf || !window.jspdf.jsPDF || typeof window.jspdf.jsPDF !== "function") {
     alert("jsPDF ou AutoTable não está carregado corretamente.");
