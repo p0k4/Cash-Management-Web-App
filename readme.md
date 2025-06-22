@@ -8,6 +8,7 @@ It's designed to manage financial transactions (entries and exits) for small ser
 ![Screenshot](../Registo_caixa/public/assets/images/readme/table.png)
 ![Screenshot](../Registo_caixa/public/assets/images/readme/pdf.png)
 
+
 ---
 
 ## 🚀 Features
