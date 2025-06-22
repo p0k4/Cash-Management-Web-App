@@ -101,6 +101,7 @@ function filtrarTabela() {
     }
     linhas[i].style.display = mostrar ? "" : "none";
   }
+    atualizarTotalTabela();
 }
 
 function atualizarTotalTabela() {
@@ -461,17 +462,12 @@ function exportarRelatorio() {
   link.click();
 }
 function exportarPDF() {
-  // Verifica se jsPDF está carregado
-  if (
-    !window.jspdf ||
-    !window.jspdf.jsPDF ||
-    typeof window.jspdf.jsPDF !== "function"
-  ) {
+  if (!window.jspdf || !window.jspdf.jsPDF || typeof window.jspdf.jsPDF !== "function") {
     alert("jsPDF ou AutoTable não está carregado corretamente.");
     return;
   }
 
-  const { jsPDF } = window.jspdf; // CORRETO!
+  const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
   const data = [];
   let total = 0;
@@ -495,34 +491,35 @@ function exportarPDF() {
       data.push(row);
     }
   });
-  const agora = new Date();
-  const dataHora = agora.toLocaleString("pt-PT"); // Ex: "21/06/2025, 22:58:30"
+
+  doc.setFont("helvetica", "bold");
   doc.setFontSize(14);
-  doc.text("Relatório de Caixa", 14, 15);
-  doc.setFontSize(9);
-  doc.text(`Exportado em: ${dataHora}`, 14, 22); // <-- linha com data/hora
+  doc.text("Relatório de Caixa", 105, 15, { align: "center" });
+
+  doc.setFontSize(10);
+  doc.setFont("helvetica", "normal");
+  const dataHora = new Date().toLocaleString("pt-PT");
+  doc.text(`Exportado em: ${dataHora}`, 105, 22, { align: "center" });
 
   doc.autoTable({
     head: [["Operação", "Data", "Nº Documento", "Pagamento", "Valor"]],
     body: data,
-    startY: 28, // espaço extra para não sobrepor a data
+    startY: 35,
+    styles: {
+      halign: "center",
+      fontSize: 10,
+    },
     headStyles: {
       fillColor: [13, 74, 99],
-      textColor: [255, 255, 255],
+      textColor: 255,
       fontStyle: "bold",
-      halign: "center",
     },
   });
-  // Corrige para a nova API: doc.lastAutoTable
-  const pageWidth = doc.internal.pageSize.getWidth();
-  doc.setFontSize(14);
-  const totalText = `Total: ${total.toFixed(2)} €`;
-  const textWidth = doc.getTextWidth(totalText);
-  doc.text(
-    totalText,
-    pageWidth - textWidth - 14,
-    doc.lastAutoTable.finalY + 10
-  );
+
+  doc.setFont("helvetica", "bold");
+  doc.text(`Total: ${total.toFixed(2)} €`, 200, doc.lastAutoTable.finalY + 10, {
+    align: "right",
+  });
 
   doc.save(`relatorio_caixa_${new Date().toISOString().split("T")[0]}.pdf`);
 }
