@@ -4,10 +4,7 @@ Cash Management Web App is a simple and interactive **cash register system** bui
 It's designed to manage financial transactions (entries and exits) for small services, such as a **public swimming pool cash box**.
 
 ---
-![Screenshot](../Registo_caixa/public/assets/images/readme/front-app.png)
-![Screenshot](../Registo_caixa/public/assets/images/readme/table.png)
-![Screenshot](../Registo_caixa/public/assets/images/readme/pdf.png)
----
+
 ## 🚀 Features
 <p align="justify">
 	•	Register Operations: Input form for new transactions with fields for date, document number, payment method, and value.
