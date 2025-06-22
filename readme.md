@@ -5,8 +5,8 @@ It's designed to manage financial transactions (entries and exits) for small ser
 
 ---
 ![Screenshot](./public/assets/images/readme/front-app.png)
-![Screenshot](../public/assets/images/readme/table.png)
-![Screenshot](../public/assets/images/readme/pdf.png)
+![Screenshot](./public/assets/images/readme/table.png)
+![Screenshot](./public/assets/images/readme/pdf.png)
 
 
 ---
