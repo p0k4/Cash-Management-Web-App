@@ -143,7 +143,7 @@ function atualizarTotalTabela() {
   const divTotaisPorPagamento = document.getElementById("totaisPagamento");
   if (divTotaisPorPagamento) {
     divTotaisPorPagamento.innerHTML = `
-      <strong></strong><br/>
+      <strong></strong>
       - Dinheiro: ${totaisPorPagamento["Dinheiro"].toFixed(2)} €<br/>
       - Multibanco: ${totaisPorPagamento["Multibanco"].toFixed(2)} €<br/>
       - Transferência Bancária: ${totaisPorPagamento[
