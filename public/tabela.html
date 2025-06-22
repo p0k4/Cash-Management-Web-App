@@ -20,9 +20,9 @@
         <i class="fas fa-arrow-left"></i> Voltar
       </a>
       <div>
-        <button type="button" id="btnApagarTudo" class="btn-apagar-tudo" title="Esta ação APAGA TODOS OS DADOS DA TABELA.">
+        <!-- <button type="button" id="btnApagarTudo" class="btn-apagar-tudo" title="Esta ação APAGA TODOS OS DADOS DA TABELA.">
           <i class="fas fa-trash-alt"></i> APAGAR TABELA
-        </button>
+        </button> -->
         <button class="btn-exportar btn-pdf" id="btnExportarPDF">
           <i class="fas fa-file-pdf"></i> Exportar PDF
         </button>
@@ -32,14 +32,15 @@
       </div>
     </div>
     <div class="linha-filtros">
-  <div class="campo-pesquisa">
-    <i class="fas fa-search"></i>
-    <input type="text" id="filtroTabela" onkeyup="filtrarTabela()" placeholder="Pesquisar na tabela:" />
-  </div>
-  <div class="filtro-data">
-    <label>Data de inicio <input type="date" id="dataInicio"></label>
+      <div class="filtro-data">
+    <div class="campo-pesquisa">
+      <i class="fas fa-search"></i>
+      <input type="text" id="filtroTabela" onkeyup="filtrarTabela()" placeholder="Pesquisar na tabela:" />
+    </div>
+      <!-- Filtro datas BD
+     <label>Data de inicio <input type="date" id="dataInicio"></label>
     <label>Data de fim <input type="date" id="dataFim"></label>
-    <button onclick="buscarPorData()">Pesquisar</button>
+    <button onclick="buscarPorData()">Pesquisar</button> -->
   </div>
 </div>
     <section class="tabela-registos">
